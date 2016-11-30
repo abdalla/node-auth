@@ -14,15 +14,16 @@ describe('Users', () => {
 
     describe('Create', () => {
         it('should register a user when given the correct credentials', (done) => {
-            let user = factory.build('user');
-
-            request(server)
-                .post('/users')
-                .send({ user })
-                .expect(200)
-                .then((res) => {
-                    expect(res.body.user).to.be.an('object');
-                    done();
+            let user = factory.build('user')
+                .then(user => {
+                    request(server)
+                        .post('/api/user')
+                        .send({ user : user })
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.user).to.be.an('object');
+                            done();
+                        });
                 });
         });
     });

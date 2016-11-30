@@ -8,15 +8,21 @@ import bluebird from 'bluebird';
 //let factory = factoryGirl.factory.promisify(bluebird);
 
 //let factory = factoryGirl;
-let factory = require('factory-girl').factory;
+let factory = factoryGirl;
 
 //Now we’re ready to actually define our factories. You’ll see that we use faker to generate default data. 
 factory.define('user', User, {
-    local: {
-        email: () => faker.internet.email(),
-        password: () => faker.internet.password(),
-        name: () => faker.name.findName()
-    }
+    // local: {
+    //     email: () => faker.internet.email(),
+    //     password: () => faker.internet.password(),
+    //     name: () => faker.name.findName()
+    // }
+
+    name: () => faker.name.findName(),
+    userName: () => faker.internet.userName(),
+    password: () => faker.internet.password(),
+    email: () => faker.internet.email(),
+    admin: false
 });
 
 export default factory;

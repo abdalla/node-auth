@@ -13,14 +13,18 @@ module.exports = (app) => {
     let router = express.Router();              
 
     // middleware to use for all requests
-    router.use(function(req, res, next) {
+    router.use((req, res, next) => {
         // do logging
         console.log('Something is happening.');
         next(); // make sure we go to the next routes and don't stop here
     });
 
-    app.get('/', function(req, res) {
+    router.get('/', (req, res) => {
         res.send('Hello! The API is at http://localhost:/api');
+    });
+
+    router.post('/user', (req, res) => {
+        res.send(req.body);
     });
  
 
