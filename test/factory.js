@@ -1,6 +1,6 @@
 //First we need to handle all of our imports.
 import factoryGirl from 'factory-girl';
-import User from '../src/models/user';
+import User from '../app/models/user';
 import faker from 'faker';
 import bluebird from 'bluebird';
 

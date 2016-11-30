@@ -4,7 +4,9 @@
   "description": "##Some core libraries Mocha - The testing framework",
   "main": "server.js",
   "scripts": {
-    "start": "./node_modules/babel-cli/bin/babel-node.js --presets node6 server.js",
+    "dev": "node src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build": "babel app -s -D -d dist --presets es2015,latest",
+    "start": "./node_modules/babel-cli/bin/babel-node.js --presets latest server.js",
     "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec",
     "test1": "mocha --require babel-polyfill --compilers js:babel-register"
   },
@@ -16,7 +18,7 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/abdalla/node-auth#readme",
   "devDependencies": {
-    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.18.0",
@@ -30,7 +32,10 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "mongoose": "^4.7.0"
+    "jsonwebtoken": "^7.1.9",
+    "mongoose": "^4.7.0",
+    "morgan": "^1.7.0"
   }
 }
