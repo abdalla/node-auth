@@ -30,7 +30,7 @@ describe('Users', () => {
             .then(user => {
                 request(server)
                     .post('/api/user')
-                    .send({ user : user })
+                    .send({ user : user.user })
                     .expect(200)
                     .then((res) => {
                         expect(res.body.success).to.be.equal(true);
@@ -45,7 +45,7 @@ describe('Users', () => {
             .then(user => {
                 request(server)
                     .post('/api/user')
-                    .send({ user : user })
+                    .send({ user : user.user })
                     .then(res => {
                         const user = res.body.user;
                         request(server)

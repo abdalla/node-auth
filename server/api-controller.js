@@ -54,11 +54,11 @@ module.exports = (app, config) => {
 
     router.post('/user', (req, res) => {
        const user = new User({
-            name: req.body.user.name,
-            userName: req.body.user.userName,
-            password: req.body.user.password,
-            email: req.body.user.email,
-            admin: req.body.user.admin
+            name: req.body.name,
+            userName: req.body.userName,
+            password: req.body.password,
+            email: req.body.email,
+            admin: req.body.admin
         });
 
         user.save(err => {
