@@ -3,8 +3,8 @@ module.exports = {
     'token' : {
         'secret': 'mysecretlife4u',
         'expires': {
-            'oneDa': '1d',
-            'oneMinut': 60
+            'oneDay': '1d',
+            'oneMinute': 60
         }
     }
 };
