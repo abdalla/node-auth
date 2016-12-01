@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import mockgoose from 'mockgoose';
-import config from '../config';
 
 /*
  * Creates and/or connects to a mongo test database in memory
@@ -9,9 +8,8 @@ import config from '../config';
  */
 const createDB = (cb) => {
     mockgoose(mongoose).then(() => {
-        mongoose.connect(config.database, cb);
+        mongoose.connect('memory', cb);
     });
-    
 };
 
 /*
