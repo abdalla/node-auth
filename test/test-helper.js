@@ -7,7 +7,7 @@ import config from '../config';
  * @param {function} cb callback function
  * @returns {void}
  */
-module.exports.createDB = (cb) => {
+const createDB = (cb) => {
     mockgoose(mongoose).then(() => {
         mongoose.connect(config.database, cb);
     });
@@ -18,6 +18,11 @@ module.exports.createDB = (cb) => {
  * Disconnects from and destroys the mongo test database in memory
  * @returns {void}
  */
-module.exports.destroyDB = () => {
+const destroyDB = () => {
     mongoose.disconnect();
 };
+
+module.exports = {
+    createDB,
+    destroyDB
+}
