@@ -11,7 +11,7 @@ Morgan - log requests to the console so we can see what is happening
 body-parser - get parameters from our POST requests
 
 jsonwebtoken - create and verify our JSON Web Tokens
----------
+
 ###For Test
 Mocha - The testing framework
 
@@ -26,4 +26,3 @@ Factory-girl - For creating factories for your models.
 Faker - For creating randomized data
 
 Supertest - For performing requests in your tests
---------------
