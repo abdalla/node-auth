@@ -23,7 +23,7 @@ app.use('/assets', express.static(`${__dirname}/public`));
 apiController(app, config);
 
 const server = app.listen(port, () => {
-    console.log(`App listening at http://${server.address().address}:${server.address().port}`);
+    console.log(`App listening at http://localhos:${server.address().port}`);
 });
 
 module.exports = server;

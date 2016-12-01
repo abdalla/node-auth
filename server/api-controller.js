@@ -77,6 +77,7 @@ module.exports = (app, config) => {
             name: 'Carlos Abdalla',
             userName: 'abdalla',
             password: 'abdallah',
+            
             email: 'a@b.com',
             admin: true
         });
