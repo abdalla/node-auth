@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "node src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "babel app -s -D -d dist --presets es2015,latest",
-    "start": "./node_modules/babel-cli/bin/babel-node.js --presets latest server.js",
-    "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec",
-    "test1": "mocha --require babel-polyfill --compilers js:babel-register"
+    "babel-node": "./node_modules/babel-cli/bin/babel-node.js --presets latest server.js",
+    "start": "nodemon --exec npm run babel-node",
+    "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec"
   },
   "repository": {
     "type": "git",

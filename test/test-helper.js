@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import mockgoose from 'mockgoose';
-
-mockgoose(mongoose);
+import config from '../config';
 
 /*
  * Creates and/or connects to a mongo test database in memory
@@ -9,7 +8,10 @@ mockgoose(mongoose);
  * @returns {void}
  */
 module.exports.createDB = (cb) => {
-    mongoose.connect('mongodb://localhost/auth-test', cb);
+    mockgoose(mongoose).then(() => {
+        mongoose.connect(config.database, cb);
+    });
+    
 };
 
 /*
