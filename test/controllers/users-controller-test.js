@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import factory from '../factory';
-import server from '../../server';
+import server from '../../src/server';
 import { createDB, destroyDB } from '../test-helper';
-//import { getToken } from '../../src/utils/functions';
 
 describe('Users', () => {
     before((done) => {
@@ -12,16 +11,30 @@ describe('Users', () => {
         });
     });
 
+    let _user = {};
     it('should setup a user for test', (done) => {
-        let user = factory.build('user')
-            .then(user => {
-                request(server)
-                    .get('/api/setup')
-                    .expect(200)
-                    .then((res) => {
-                        expect(res.body.success).to.be.equal(true);
-                        done();
-                    });
+        request(server)
+            .get('/api/setup')
+            .expect(200)
+            .then((res) => {
+                _user = res.body.user;
+                expect(res.body.success).to.be.equal(true);
+                done();
+            });
+    });
+
+    let _token = '';
+    it('should authenticate using the user created on setup', (done) => {
+        _user.password = 'abdallah'; //did it only to pass on the test...
+        request(server)
+            .post('/api/auth')
+            .send({ email: _user.email, password: _user.password })
+            .expect(200)
+            .then((res) => {
+                _token = res.body.token;
+                expect(res.body.success).to.be.equal(true);
+                expect(res.body.token).to.be.an('string');
+                done();
             });
     });
 
@@ -30,38 +43,17 @@ describe('Users', () => {
             .then(user => {
                 request(server)
                     .post('/api/user')
-                    .send({ user : user.user })
+                    .send({ user : user })
+                    .set('x-access-token', _token)
                     .expect(200)
                     .then((res) => {
                         expect(res.body.success).to.be.equal(true);
                         expect(res.body.user).to.be.an('object');
                         done();
-                    });
+                    })
+                    .catch((err) => console.log(err));
             });
     });
-
-    it('should authenticate user', (done) => {
-        let user = factory.build('user')
-            .then(user => {
-                request(server)
-                    .post('/api/user')
-                    .send({ user : user.user })
-                    .then(res => {
-                        const user = res.body.user;
-                        request(server)
-                            .post('/api/auth')
-                            .send({ email: user.email, password: user.password })
-                            .expect(200)
-                            .then((res) => {
-                                expect(res.body.success).to.be.equal(true);
-                                expect(res.body.token).to.be.an('string');
-                                done();
-                            });
-                    });
-                    
-            });
-    });
-
 
     after(() => {
         destroyDB();

@@ -25,8 +25,23 @@ const userSchema = mongoose.Schema({
     //     email: String,
     //     name: String
     // }
-    name: String,
-    userName: String,
+
+///
+//  userName: { 
+//         type: String, 
+//         //match: /[a-zA-Z]/, 
+//         required: true 
+//     },
+///
+
+    name: { 
+        type: String, 
+        required: true 
+    },
+    userName: { 
+        type: String,
+        required: true 
+    },
     password: String,
     email: String,
     admin: Boolean
@@ -40,8 +55,17 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
+
+//middleware
+userSchema.pre('save', function (next) {
+  this.password = this.generateHash(this.password);
+  next();
+});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
+
+
+

@@ -1,8 +1,8 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-
-import User from '../app/models/user';
+import requiredToken from './middleware/required-token';
+import User from '../models/user';
 
 module.exports = (app, config) => {
 
@@ -36,11 +36,11 @@ module.exports = (app, config) => {
         User.findOne(filter, (err, user) => {
             if (err) throw err;
 
-           if (!user || user.password !== req.body.password ) {
+           if (!user || !user.validPassword(req.body.password)) {
                 res.json({ success: false, message: 'Authentication failed, email or password invalid.' });
             } else {
-                const token = jwt.sign(user, app.get('superSecret'), {
-                    expiresIn: config.token.expires.oneDay
+                const token = jwt.sign(user, config.token.publicKey, {
+                    expiresIn: config.token.expires.oneMinute
                 });
 
                 res.json({
@@ -53,22 +53,33 @@ module.exports = (app, config) => {
     });
 
     router.post('/user', (req, res) => {
-       const user = new User({
-            name: req.body.name,
-            userName: req.body.userName,
-            password: req.body.password,
-            email: req.body.email,
-            admin: req.body.admin
-        });
+    //    const user = new User({
+    //         name: req.body.user.name,
+    //         userName: req.body.user.userName,
+    //         password: req.body.user.password,
+    //         email: req.body.user.email,
+    //         admin: req.body.user.admin
+    //     });
 
-        user.save(err => {
-             if(err) throw err;
+        const user = new User( req.body.user );
 
-             res.json({ 
+        user.save().then(user => {
+            res.json({ 
                  success: true,
                  user
             });
+        })
+        .catch(err => {
+            throw err;
         });
+        // user.save(err => {
+        //      if(err) throw err;
+
+        //      res.json({ 
+        //          success: true,
+        //          user
+        //     });
+        // });
     });
 
 
@@ -77,7 +88,6 @@ module.exports = (app, config) => {
             name: 'Carlos Abdalla',
             userName: 'abdalla',
             password: 'abdallah',
-            
             email: 'a@b.com',
             admin: true
         });
@@ -85,10 +95,30 @@ module.exports = (app, config) => {
         user.save(err => {
              if(err) throw err;
 
-             res.json({ success: true });
+             res.json({ 
+                 success: true,
+                 user 
+            });
         });
 
     });
+
+    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup'] };
+    const validToken = (token, cb) => {
+        if (token) {
+            jwt.verify(token, options.publicKey, function(err, decoded) {      
+                if (err) {
+                    return cb('Failed to authenticate token');    
+                } else {
+                    return cb(null, decoded);
+                }
+            });
+        } else {
+            return cb('Token is required.');
+        }
+    };
+
+    app.use(requiredToken(options, validToken));
 
     app.use('/api', router);
 };
