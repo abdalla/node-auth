@@ -33,9 +33,7 @@ module.exports = (app, config) => {
     router.post('/auth', (req, res) => {
         const filter = { email: req.body.email };
 
-        User.findOne(filter, (err, user) => {
-            if (err) throw err;
-
+        User.findOne(filter).then(user => {
            if (!user || !user.validPassword(req.body.password)) {
                 res.json({ success: false, message: 'Authentication failed, email or password invalid.' });
             } else {
@@ -49,22 +47,17 @@ module.exports = (app, config) => {
                     token
                 });
             }
+        })
+        .catch(err => {
+            throw err;
         });
     });
 
     router.post('/user', (req, res) => {
-    //    const user = new User({
-    //         name: req.body.user.name,
-    //         userName: req.body.user.userName,
-    //         password: req.body.user.password,
-    //         email: req.body.user.email,
-    //         admin: req.body.user.admin
-    //     });
-
         const user = new User( req.body.user );
 
         user.save().then(user => {
-            res.json({ 
+            res.json({
                  success: true,
                  user
             });
@@ -72,16 +65,7 @@ module.exports = (app, config) => {
         .catch(err => {
             throw err;
         });
-        // user.save(err => {
-        //      if(err) throw err;
-
-        //      res.json({ 
-        //          success: true,
-        //          user
-        //     });
-        // });
     });
-
 
     router.get('/setup', (req, res) => {
         const user = new User({
@@ -91,24 +75,24 @@ module.exports = (app, config) => {
             email: 'a@b.com',
             admin: true
         });
-        
-        user.save(err => {
-             if(err) throw err;
 
-             res.json({ 
-                 success: true,
-                 user 
+        user.save().then(user => {
+            res.json({
+                success: true,
+                user
             });
+        })
+        .catch(err => {
+            throw err;
         });
-
     });
 
     const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup'] };
     const validToken = (token, cb) => {
         if (token) {
-            jwt.verify(token, options.publicKey, function(err, decoded) {      
+            jwt.verify(token, options.publicKey, function(err, decoded) {
                 if (err) {
-                    return cb('Failed to authenticate token');    
+                    return cb('Failed to authenticate token');
                 } else {
                     return cb(null, decoded);
                 }

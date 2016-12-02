@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import bluebird from 'bluebird';
 import config from './config';
 import userController from'./controllers/user-controller';
 
@@ -23,6 +24,8 @@ userController(app, config);
 const server = app.listen(port, () => {
     if(env !== 'test') {
         mongoose.connect(config.database);
+        mongoose.Promise = bluebird;
+
         console.log(`App listening at http://localhos:${server.address().port}`);
     }
 });

@@ -12,6 +12,8 @@ body-parser - get parameters from our POST requests
 
 jsonwebtoken - create and verify our JSON Web Tokens
 
+bluebird - promise
+
 ###For Test
 Mocha - The testing framework
 
