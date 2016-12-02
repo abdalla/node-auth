@@ -81,7 +81,7 @@ describe('Users', () => {
                     .post('/api/user')
                     .send({ user : user })
                     .set('x-access-token', _token)
-                    .expect(200)
+                    .expect(500)
                     .then((res) => {
                         expect(res.body.success).not.to.be.equal(true);
                         done();
@@ -98,7 +98,7 @@ describe('Users', () => {
                     .post('/api/user')
                     .send({ user : user })
                     .set('x-access-token', _token)
-                    .expect(200)
+                    .expect(500)
                     .then((res) => {
                         expect(res.body.success).not.to.be.equal(true);
                         done();
@@ -115,7 +115,7 @@ describe('Users', () => {
                     .post('/api/user')
                     .send({ user : user })
                     .set('x-access-token', _token)
-                    .expect(200)
+                    .expect(500)
                     .then((res) => {
                         expect(res.body.success).not.to.be.equal(true);
                         done();
@@ -132,7 +132,7 @@ describe('Users', () => {
                     .post('/api/user')
                     .send({ user : user })
                     .set('x-access-token', _token)
-                    .expect(200)
+                    .expect(500)
                     .then((res) => {
                         expect(res.body.success).not.to.be.equal(true);
                         done();

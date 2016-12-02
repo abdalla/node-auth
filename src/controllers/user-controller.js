@@ -21,12 +21,18 @@ module.exports = (app, config) => {
     });
 
     router.get('/', (req, res) => {
-        res.send('Hello! The API is at http://localhost:/api');
+        res.send('The API is at http://url/api');
     });
 
-    router.get('/users', (req, res) => {
-        User.find({}, (err, users) => {
+    router.get('/users', (req, res) => {        
+        User.find({}).then(users => {
             res.json(users);
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                err
+            });
         });
     });
 
@@ -38,7 +44,7 @@ module.exports = (app, config) => {
                 res.json({ success: false, message: 'Authentication failed, email or password invalid.' });
             } else {
                 const token = jwt.sign(user, config.token.publicKey, {
-                    expiresIn: config.token.expires.oneMinute
+                    expiresIn: config.token.expires.oneDay
                 });
 
                 res.json({
@@ -49,7 +55,7 @@ module.exports = (app, config) => {
             }
         })
         .catch(err => {
-            res.json({
+            res.status(500).json({
                  success: false,
                  err
             });
@@ -66,7 +72,7 @@ module.exports = (app, config) => {
             });
         })
         .catch(err => {
-            res.json({
+            res.status(500).json({
                  success: false,
                  err
             });
@@ -89,7 +95,7 @@ module.exports = (app, config) => {
             });
         })
         .catch(err => {
-            res.json({
+            res.status(500).json({
                  success: false,
                  err
             });
