@@ -49,13 +49,16 @@ module.exports = (app, config) => {
             }
         })
         .catch(err => {
-            throw err;
+            res.json({
+                 success: false,
+                 err
+            });
         });
     });
 
     router.post('/user', (req, res) => {
-        const user = new User( req.body.user );
-
+        let user = new User( req.body.user );
+        
         user.save().then(user => {
             res.json({
                  success: true,
@@ -63,7 +66,10 @@ module.exports = (app, config) => {
             });
         })
         .catch(err => {
-            throw err;
+            res.json({
+                 success: false,
+                 err
+            });
         });
     });
 
@@ -83,7 +89,10 @@ module.exports = (app, config) => {
             });
         })
         .catch(err => {
-            throw err;
+            res.json({
+                 success: false,
+                 err
+            });
         });
     });
 
