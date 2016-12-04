@@ -66,8 +66,8 @@ userSchema.methods.validPassword = function(password) {
 
 //middleware
 userSchema.pre('save', function (next) {
-  this.password = this.generateHash(this.password);
-  next();
+    this.password = this.generateHash(this.password);
+    next();
 });
 
 // create the model for users and expose it to our app

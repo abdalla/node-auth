@@ -26,10 +26,9 @@ describe('Users', () => {
 
     let _token = '';
     it('should authenticate using the user created on setup', (done) => {
-        _user.password = 'abdallah'; //did it only to pass on the test...
         request(server)
             .post('/api/auth')
-            .send({ email: _user.email, password: _user.password })
+            .send({ email: 'admin@node.com', password: 'admin' })
             .expect(200)
             .then((res) => {
                 _token = res.body.token;
@@ -139,6 +138,55 @@ describe('Users', () => {
                     })
                     .catch((err) => done(err));
             });
+    });
+
+    after(() => {
+        destroyDB();
+    });
+
+    it('should update a user when given the correct credentials', (done) => {
+        _user.name = 'John Due';
+        request(server)
+            .put('/api/user')
+            .send({ user : _user })
+            .set('x-access-token', _token)
+            .expect(200)
+            .then((res) => {
+                expect(res.body.success).to.be.equal(true);
+                done();
+            })
+            .catch((err) => done(err));
+            
+    });
+
+    it('should NOT update a user with invalid credentials', (done) => {
+        _user.name = 'John Due';
+        request(server)
+            .put('/api/user')
+            .send({ user : _user })
+            .set('x-access-token', _token + '5555555')
+            .expect(403)
+            .then((res) => {
+                expect(res.body.success).to.be.equal(false);
+                done();
+            })
+            .catch((err) => done(err));
+            
+    });
+
+    it('should NOT update a user with invalid ID', (done) => {
+        _user._id = 5552554848848;
+        request(server)
+            .put('/api/user')
+            .send({ user : _user })
+            .set('x-access-token', _token)
+            .expect(500)
+            .then((res) => {
+                expect(res.body.success).to.be.equal(false);
+                done();
+            })
+            .catch((err) => done(err));
+            
     });
 
     after(() => {
