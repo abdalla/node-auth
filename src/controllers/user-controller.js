@@ -79,51 +79,28 @@ module.exports = (app, config) => {
         });
     });
 
-    router.put('/user', (req, res) => {
-        let toSave = new User( req.body.user );
+    router.put('/user', (req, res) => {              
+        let toSave = new User( req.body.user );    
 
-        User.findByIdAndUpdate(req.body.user._id, toSave).then(user => {
-            res.json({
-                success: true,
-                user: toSave
-            });
+        User.findByIdAndUpdate(req.body.user._id, toSave, {new: true, runValidators: true}).then(user => {
+            if(user) {
+                res.json({
+                    success: true,
+                    user: user
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    err: 'User not found'
+                });    
+            }
         })
         .catch(err => {
             res.status(500).json({
                 success: false,
                 err
             });
-        });
-
-
-
-        // User.findById(req.body.user._id).then(user => {
-        //     user.name = changedUser.name || user.name;
-        //     user.userName = changedUser.userName || user.userName;
-        //     user.email = changedUser.email || user.email;
-        //     user.admin = changedUser.admin || user.admin;
-
-        //     user.save().then(user => {
-        //         res.status(200).json({
-        //             success: true,
-        //             user
-        //         });
-        //     })
-        //     .catch(err => {
-        //         res.status(500).json({
-        //             success: false,
-        //             err
-        //         });
-        //     });
-        // })
-        // .catch(err => {
-        //     res.status(500).json({
-        //          success: false,
-        //          err
-        //     });
-        // });
-
-        
+        });       
     });
 
     router.get('/setup', (req, res) => {

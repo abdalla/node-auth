@@ -3,44 +3,16 @@ import bcrypt from 'bcrypt-nodejs';
 
 // define the schema for our user model
 const userSchema = mongoose.Schema({
-    // local: {
-    //     email: String,
-    //     password: String,
-    // },
-    // facebook: {
-    //     id: String,
-    //     token: String,
-    //     email: String,
-    //     name: String
-    // },
-    // twitter: {
-    //     id: String,
-    //     token: String,
-    //     displayName: String,
-    //     username: String
-    // },
-    // google: {
-    //     id: String,
-    //     token: String,
-    //     email: String,
-    //     name: String
-    // }
-
-///
-//  userName: { 
-//         type: String, 
-//         //match: /[a-zA-Z]/, 
-//         required: true 
-//     },
-///
-
     name: { 
         type: String, 
-        required: true 
+        required:  [true, 'Name is required.'] 
     },
     userName: { 
         type: String,
-        required: true 
+        required: true,
+        index: { 
+            unique: true 
+        } 
     },
     password: { 
         type: String,
@@ -48,7 +20,10 @@ const userSchema = mongoose.Schema({
     },
     email: { 
         type: String,
-        required: true 
+        required: true,
+        index: { 
+            unique: true 
+        } 
     },
     admin: Boolean
 });
@@ -69,6 +44,11 @@ userSchema.pre('save', function (next) {
     this.password = this.generateHash(this.password);
     next();
 });
+
+// userSchema.pre('findOneAndUpdate', function (next) {
+//     console.log('update is not working');
+//     this.update({}, { $inc: { __v: 1 } }, next );
+// });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
