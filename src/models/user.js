@@ -3,27 +3,27 @@ import bcrypt from 'bcrypt-nodejs';
 
 // define the schema for our user model
 const userSchema = mongoose.Schema({
-    name: { 
-        type: String, 
-        required:  [true, 'Name is required.'] 
+    name: {
+        type: String,
+        required:  [true, 'Name is required.']
     },
-    userName: { 
+    userName: {
         type: String,
         required: true,
-        index: { 
-            unique: true 
-        } 
+        index: {
+            unique: true
+        }
     },
-    password: { 
+    password: {
         type: String,
-        required: true 
+        required: true
     },
-    email: { 
+    email: {
         type: String,
         required: true,
-        index: { 
-            unique: true 
-        } 
+        index: {
+            unique: true
+        }
     },
     admin: Boolean
 });

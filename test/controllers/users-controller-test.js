@@ -10,7 +10,7 @@ describe('Users', () => {
             done();
         });
     });
-    
+
     let _user = {};
     let _token = '';
 
@@ -201,7 +201,7 @@ describe('Users', () => {
     });
 
     describe('Update', () => {
-        
+
         it('should update a user when given the correct credentials', (done) => {
             let _userUpdate = {
                 _id: _user._id,
@@ -314,7 +314,7 @@ describe('Users', () => {
     });
 
     describe('Delete', () => {
-        
+
     })
 
     after(() => {

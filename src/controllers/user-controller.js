@@ -24,7 +24,7 @@ module.exports = (app, config) => {
         res.send('The API is at http://url/api');
     });
 
-    router.get('/users', (req, res) => {        
+    router.get('/users', (req, res) => {
         User.find({}).then(users => {
             res.json(users);
         })
@@ -64,7 +64,7 @@ module.exports = (app, config) => {
 
     router.post('/user', (req, res) => {
         let user = new User( req.body.user );
-        
+
         user.save().then(user => {
             res.json({
                  success: true,
@@ -79,8 +79,8 @@ module.exports = (app, config) => {
         });
     });
 
-    router.put('/user', (req, res) => {              
-        let toSave = new User( req.body.user );    
+    router.put('/user', (req, res) => {
+        let toSave = new User( req.body.user );
 
         User.findByIdAndUpdate(req.body.user._id, toSave, {new: true, runValidators: true}).then(user => {
             if(user) {
@@ -92,7 +92,7 @@ module.exports = (app, config) => {
                 res.status(500).json({
                     success: false,
                     err: 'User not found'
-                });    
+                });
             }
         })
         .catch(err => {
@@ -100,7 +100,7 @@ module.exports = (app, config) => {
                 success: false,
                 err
             });
-        });       
+        });
     });
 
     router.get('/setup', (req, res) => {
