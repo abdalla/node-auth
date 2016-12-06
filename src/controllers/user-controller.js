@@ -5,12 +5,9 @@ import requiredToken from './middleware/required-token';
 import User from '../models/user';
 
 module.exports = (app, config) => {
-
-    //bodyParser configuration
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
-    // get an instance of the express Router
     let router = express.Router();
 
     // middleware to use for all requests
@@ -104,7 +101,6 @@ module.exports = (app, config) => {
     });
 
     router.delete('/user/:id', (req, res) => {
-
         User.findByIdAndRemove(req.params.id, { passRawResult:  true }).then(user => {
             if(user) {
                 res.json({
