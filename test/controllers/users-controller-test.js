@@ -1,3 +1,4 @@
+'use strict';
 import chai, { expect } from 'chai';
 import request from 'supertest';
 import factory from '../factory';

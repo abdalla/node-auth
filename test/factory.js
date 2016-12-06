@@ -1,3 +1,4 @@
+'use strict';
 import factory from 'factory-girl';
 import User from '../src/models/user';
 import faker from 'faker';

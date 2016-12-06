@@ -1,5 +1,4 @@
-"use strict"
-
+'use strict';
 const requiredToken =  ( options, tokenValidator ) => {
     return (req, res, next) => {
 
