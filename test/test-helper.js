@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import mockgoose from 'mockgoose';
-import bluebird from 'bluebird';
 
 /*
  * Creates and/or connects to a mongo test database in memory
@@ -9,7 +8,6 @@ import bluebird from 'bluebird';
  */
 const createDB = (cb) => {
     mockgoose(mongoose).then(() => {
-        mongoose.Promise = bluebird;
         mongoose.connect('memory', cb);
     });
 };

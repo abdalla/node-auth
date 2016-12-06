@@ -1,5 +1,3 @@
-//Rename it
-//Make it as a npm package
 "use strict"
 
 const requiredToken =  ( options, tokenValidator ) => {
@@ -10,7 +8,6 @@ const requiredToken =  ( options, tokenValidator ) => {
         const ignoreRoute = ( options.ignoredRoutes || false ) && options.ignoredRoutes.some( route => route === req.originalUrl );
 
         if (!ignoreRoute) {
-            // check header or url parameters or post parameters for token
             var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
             if(!token) {
@@ -36,4 +33,5 @@ const requiredToken =  ( options, tokenValidator ) => {
         }
     };
 };
+
 module.exports = requiredToken;

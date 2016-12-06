@@ -13,8 +13,7 @@ module.exports = (app, config) => {
     // middleware to use for all requests
     router.use((req, res, next) => {
         // do logging
-        //console.log('Something is happening.');
-        next(); // make sure we go to the next routes and don't stop here
+        next();
     });
 
     router.get('/', (req, res) => {

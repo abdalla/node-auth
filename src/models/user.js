@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
 
-// define the schema for our user model
 const userSchema = mongoose.Schema({
     name: {
         type: String,
@@ -45,12 +44,6 @@ userSchema.pre('save', function (next) {
     next();
 });
 
-// userSchema.pre('findOneAndUpdate', function (next) {
-//     console.log('update is not working');
-//     this.update({}, { $inc: { __v: 1 } }, next );
-// });
-
-// create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
 
 

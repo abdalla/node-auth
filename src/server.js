@@ -11,8 +11,7 @@ const app = express();
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
 
-//secret configuration
-//app.set('publicKey', config.token.publicKey);
+mongoose.Promise = bluebird;
 
 //morgan configuration
 app.use(morgan('dev', {
@@ -26,8 +25,7 @@ userController(app, config);
 const server = app.listen(port, () => {
     if(env !== 'test') {
         mongoose.connect(config.database);
-        mongoose.Promise = bluebird;
-
+        
         console.log(`App listening at http://localhos:${server.address().port}`);
     }
 });
