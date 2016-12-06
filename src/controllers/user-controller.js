@@ -23,7 +23,10 @@ module.exports = (app, config) => {
 
     router.get('/users', (req, res) => {
         User.find({}).then(users => {
-            res.json(users);
+            res.status(200).json({
+                success: true,
+                users
+            });
         })
         .catch(err => {
             res.status(500).json({

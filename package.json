@@ -9,7 +9,8 @@
     "babel": "./node_modules/babel-cli/bin/babel-node.js --presets latest --plugins syntax-async-functions ./src/server.js",
     "babel-node": "./node_modules/babel-cli/bin/babel-node.js ./src/server.js",
     "start": "nodemon --exec npm run babel-node",
-    "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec"
+    "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec",
+    "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://bitbucket.org/abdalla/node-auth#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
+    "babel-istanbul": "^0.11.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-polyfill": "^6.16.0",
@@ -28,6 +30,7 @@
     "chai": "^3.5.0",
     "factory-girl": "^4.0.0-beta.7",
     "faker": "^3.1.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mockgoose": "^6.0.8",
     "supertest": "^2.0.1"

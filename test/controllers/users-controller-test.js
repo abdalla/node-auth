@@ -56,6 +56,58 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
+        
+    });
+
+    describe('Read', function () {
+       it('should get all users when given the correct credentials', (done) => {
+            request(server)
+                .get('/api/users')
+                .set('x-access-token', _token)
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.users).to.be.an('array');
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should NOT get all users passing id and given the correct credentials', (done) => {
+            request(server)
+                .get('/api/users/5')
+                .set('x-access-token', _token)
+                .expect(404)
+                .then((res) => {
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should NOT get all users passing invalid credentials', (done) => {
+            request(server)
+                .get('/api/users')
+                .set('x-access-token', _token + '1234')
+                .expect(401)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    expect(res.body.message).to.be.equal('Failed to authenticate token');
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should NOT get all users with no credentials', (done) => {
+            request(server)
+                .get('/api/users')
+                .expect(403)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    expect(res.body.message).to.be.equal('Token is required.');
+                    done();
+                })
+                .catch((err) => done(err));
+       });
     });
 
     describe('Create', () =>{
