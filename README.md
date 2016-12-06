@@ -26,3 +26,5 @@ Factory-girl - For creating factories for your models.
 Faker - For creating randomized data
 
 Supertest - For performing requests in your tests
+
+Istanbul - JS code coverage tool 
