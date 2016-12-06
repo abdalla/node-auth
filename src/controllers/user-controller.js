@@ -41,7 +41,7 @@ module.exports = (app, config) => {
 
         User.findOne(filter).then(user => {
            if (!user || !user.validPassword(req.body.password)) {
-                res.json({ success: false, message: 'Authentication failed, email or password invalid.' });
+                res.json({ success: false, message: 'Authentication failed, email or password invalid.', token: null });
             } else {
                 const token = jwt.sign(user, config.token.publicKey, {
                     expiresIn: config.token.expires.oneDay

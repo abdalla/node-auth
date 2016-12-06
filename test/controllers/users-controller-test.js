@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import request from 'supertest';
 import factory from '../factory';
 import server from '../../src/server';
@@ -6,6 +6,7 @@ import { createDB, destroyDB } from '../test-helper';
 
 describe('Users', () => {
     before((done) => {
+        chai.config.includeStack = true;
         createDB(() => {
             done();
         });
@@ -42,7 +43,20 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
-    })
+
+        it('should NOT authenticate using the user created on setup', (done) => {
+            request(server)
+                .post('/api/auth')
+                .send({ email: 'admin@node.com', password: 'admin123456' })
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    chai.should().not.exist(res.body.token);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+    });
 
     describe('Create', () =>{
         it('should register a user when given the correct credentials', (done) => {
@@ -314,8 +328,70 @@ describe('Users', () => {
     });
 
     describe('Delete', () => {
+        it('should delete a user when given the correct credentials', (done) => {
+            request(server)
+                .delete(`/api/user/${_user._id}`)
+                .set('x-access-token', _token)
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    chai.should().not.exist(res.body.user);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
 
-    })
+        it('should NOT delete a user that was already deleted when given the correct credentials', (done) => {
+            request(server)
+                .delete(`/api/user/${_user._id}`)
+                .set('x-access-token', _token)
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    chai.should().not.exist(res.body.user);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+        it('should NOT delete a user passing invalid credentials', (done) => {
+            request(server)
+                .delete(`/api/user/${_user._id}`)
+                .set('x-access-token', _token + '12345678')
+                .expect(401)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    chai.should().not.exist(res.body.user);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+        it('should NOT delete a user passing NO credentials', (done) => {
+            request(server)
+                .delete(`/api/user/${_user._id}`)
+                .expect(403)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    chai.should().not.exist(res.body.user);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+        it('should NOT delete a user Without ID', (done) => {
+            request(server)
+                .delete(`/api/user/`)
+                .set('x-access-token', _token)
+                .expect(404)
+                .then((res) => {
+                   done();
+                })
+                .catch((err) => done(err));
+        });
+
+
+    });
 
     after(() => {
         destroyDB();
