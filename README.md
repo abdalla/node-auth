@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/abdalla/node-auth.svg?branch=master)](https://travis-ci.org/abdalla/node-auth)
+[![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 # NODE Auth + Tests
 
 ##Some core libraries
