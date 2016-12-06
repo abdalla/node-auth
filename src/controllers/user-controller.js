@@ -103,6 +103,29 @@ module.exports = (app, config) => {
         });
     });
 
+    router.delete('/user/:id', (req, res) => {
+
+        User.findByIdAndRemove(req.params.id, { passRawResult:  true }).then(user => {
+            if(user) {
+                res.json({
+                    success: true,
+                    user: user
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    err: 'User not found'
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    });
+
     router.get('/setup', (req, res) => {
         const user = new User({
             name: 'Admin',

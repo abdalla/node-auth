@@ -335,7 +335,7 @@ describe('Users', () => {
                 .expect(200)
                 .then((res) => {
                     expect(res.body.success).to.be.equal(true);
-                    chai.should().not.exist(res.body.user);
+                    chai.should().exist(res.body.user);
                     done();
                 })
                 .catch((err) => done(err));
@@ -345,9 +345,9 @@ describe('Users', () => {
             request(server)
                 .delete(`/api/user/${_user._id}`)
                 .set('x-access-token', _token)
-                .expect(200)
+                .expect(500)
                 .then((res) => {
-                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.success).to.be.equal(false);
                     chai.should().not.exist(res.body.user);
                     done();
                 })
@@ -360,7 +360,7 @@ describe('Users', () => {
                 .set('x-access-token', _token + '12345678')
                 .expect(401)
                 .then((res) => {
-                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.success).to.be.equal(false);
                     chai.should().not.exist(res.body.user);
                     done();
                 })
@@ -372,7 +372,7 @@ describe('Users', () => {
                 .delete(`/api/user/${_user._id}`)
                 .expect(403)
                 .then((res) => {
-                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.success).to.be.equal(false);
                     chai.should().not.exist(res.body.user);
                     done();
                 })
@@ -381,7 +381,7 @@ describe('Users', () => {
 
         it('should NOT delete a user Without ID', (done) => {
             request(server)
-                .delete(`/api/user/`)
+                .delete(`/api/user`)
                 .set('x-access-token', _token)
                 .expect(404)
                 .then((res) => {
@@ -389,8 +389,6 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
-
-
     });
 
     after(() => {
