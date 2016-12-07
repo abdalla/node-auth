@@ -1,4 +1,8 @@
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![bitHound Code](https://www.bithound.io/github/abdalla/node-auth/badges/code.svg)](https://www.bithound.io/github/abdalla/node-auth)
+[![bitHound Overall Score](https://www.bithound.io/github/abdalla/node-auth/badges/score.svg)](https://www.bithound.io/github/abdalla/node-auth)
+[![bitHound Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/dependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/devDependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
 # NODE Auth
 It is a project to help to create an api using nodejs.
 
