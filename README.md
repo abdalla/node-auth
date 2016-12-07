@@ -1,6 +1,6 @@
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 # NODE Auth
-It is an project to help to create an api using nodejs.
+It is a project to help to create an api using nodejs.
 To avoid start from the very begin using authentication and mongodb as database.
 
 # How to use
@@ -22,7 +22,7 @@ Running tests to make sure everything is pretty simple...
 ```
 npm t
 ```
-or to get coverage statistic 
+or to get coverage statistics 
 ```
 npm run test-cover
 ```
