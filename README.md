@@ -5,6 +5,7 @@
 [![bitHound Dev Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/devDependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
 [![Code Climate](https://codeclimate.com/github/abdalla/node-auth/badges/gpa.svg)](https://codeclimate.com/github/abdalla/node-auth)
 [![Coverage Status](https://coveralls.io/repos/github/abdalla/node-auth/badge.svg?branch=master)](https://coveralls.io/github/abdalla/node-auth?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/abdalla/node-auth/badge.svg)](https://snyk.io/test/github/abdalla/node-auth)
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 # NODE Auth
 It is a project to help to create an api using nodejs.
