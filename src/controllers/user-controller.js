@@ -125,7 +125,7 @@ module.exports = (app, config) => {
         });
     });
 
-    router.get('/setup', (req, res) => {
+    router.post('/setup', (req, res) => {
         const user = new User({
             name: 'Admin',
             userName: 'admin',

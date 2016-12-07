@@ -19,7 +19,7 @@ describe('Users', () => {
     describe('Setup', () => {
         it('should setup a user for test', (done) => {
             request(server)
-                .get('/api/setup')
+                .post('/api/setup')
                 .expect(200)
                 .then((res) => {
                     _user = res.body.user;

@@ -57,9 +57,17 @@ npm run test-cover
 ### Setup
 Used to create the first user (admin)
 
-___Verbose:___ `GET`
+___Verbose:___ `POST`
 ```
 http://localhost:3000/api/setup
+```
+
+Response:
+```
+{
+  "success": true,
+  "user": { user information }
+}
 ```
 
 ### Authentication
