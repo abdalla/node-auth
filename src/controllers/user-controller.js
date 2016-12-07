@@ -21,17 +21,25 @@ module.exports = (app, config) => {
         res.send('The API is at http://url/api');
     });
 
-    router.get('/users', (req, res) => {
-        User.find({}).then(users => {
-            res.status(200).json({
+    router.post('/setup', (req, res) => {
+        const user = new User({
+            name: 'Admin',
+            userName: 'admin',
+            password: 'admin',
+            email: 'admin@node.com',
+            admin: true
+        });
+
+        user.save().then(user => {
+            res.json({
                 success: true,
-                users
+                user
             });
         })
         .catch(err => {
             res.status(500).json({
-                success: false,
-                err
+                 success: false,
+                 err
             });
         });
     });
@@ -62,6 +70,43 @@ module.exports = (app, config) => {
         });
     });
 
+    router.get('/users', (req, res) => {
+        User.find({}).then(users => {
+            res.status(200).json({
+                success: true,
+                users
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    });
+
+    router.get('/user/:id', (req, res) => {
+        if(!req.params.id) {
+            res.status(403).json({
+                success: false,
+                err: 'Id could not be null'
+            });
+        };
+
+        User.findById(req.params.id).then(user => {
+            res.json({
+                success: true,
+                user
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    });
+
     router.post('/user', (req, res) => {
         let user = new User( req.body.user );
 
@@ -86,7 +131,7 @@ module.exports = (app, config) => {
             if(user) {
                 res.json({
                     success: true,
-                    user: user
+                    user
                 });
             } else {
                 res.status(500).json({
@@ -108,7 +153,7 @@ module.exports = (app, config) => {
             if(user) {
                 res.json({
                     success: true,
-                    user: user
+                    user
                 });
             } else {
                 res.status(500).json({
@@ -121,29 +166,6 @@ module.exports = (app, config) => {
             res.status(500).json({
                 success: false,
                 err
-            });
-        });
-    });
-
-    router.post('/setup', (req, res) => {
-        const user = new User({
-            name: 'Admin',
-            userName: 'admin',
-            password: 'admin',
-            email: 'admin@node.com',
-            admin: true
-        });
-
-        user.save().then(user => {
-            res.json({
-                success: true,
-                user
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                 success: false,
-                 err
             });
         });
     });

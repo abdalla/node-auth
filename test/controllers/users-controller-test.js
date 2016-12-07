@@ -57,7 +57,7 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
-        
+
     });
 
     describe('Read', function () {
@@ -109,6 +109,69 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
        });
+
+       it('should get user when given the correct credentials', (done) => {
+            request(server)
+                .get(`/api/user/${_user._id}`)
+                .set('x-access-token', _token)
+                .expect(200)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.user).to.be.an('object');
+                    expect(res.body.user._id).to.be.equal(_user._id);
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should NOT get user without id', (done) => {
+            request(server)
+                .get(`/api/user/`)
+                .set('x-access-token', _token)
+                .expect(404)
+                .then((res) => {
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should get user with incorrect id', (done) => {
+            request(server)
+                .get(`/api/user/123456`)
+                .set('x-access-token', _token)
+                .expect(500)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should get user with incorrect token', (done) => {
+            request(server)
+                .get(`/api/user/${_user._id}`)
+                .set('x-access-token', '123456')
+                .expect(401)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+       it('should get user without token', (done) => {
+            request(server)
+                .get(`/api/user/${_user._id}`)
+                .expect(403)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+       });
+
+
+
     });
 
     describe('Create', () =>{

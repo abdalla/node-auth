@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import config from './config';
-import userController from'./controllers/user-controller';
+import apiController from'./controllers/api-controller';
 
 const app = express();
 const env = process.env.NODE_ENV || 'dev';
@@ -17,9 +17,7 @@ app.use(morgan('dev', {
     skip: function(req, res) { return env === 'test'; }
 }));
 
-//routes configuration
-app.use('/assets', express.static(`${__dirname}/public`));
-userController(app, config);
+apiController(app, config);
 
 const server = app.listen(port, () => {
     if(env !== 'test') {
