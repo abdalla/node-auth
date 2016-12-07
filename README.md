@@ -5,7 +5,7 @@ It is a project to help to create an api using nodejs.
 To avoid start from the very beginning using authentication and mongodb as database.
 
 # How to use
-To use you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
+To use it, you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
 ![server.js](http://res.cloudinary.com/abdalla/image/upload/v1481067460/Screen_Shot_2016-12-06_at_6.30.54_PM_xllqfw.png)
 ![config.js](http://res.cloudinary.com/abdalla/image/upload/v1481067536/Screen_Shot_2016-12-06_at_6.38.39_PM_urqtq2.png)
 
@@ -19,7 +19,9 @@ To use you will need to have a mongodb server and change it's config on `server.
 # Running tests
 To run the tests you don't need to have mongodb installed, we are using mockgoose to simulale on.
 
-Running tests to make sure everything is pretty simple...
+Running tests to make sure everything is working good. 
+
+It is pretty simple...
 ```
 npm t
 ```
