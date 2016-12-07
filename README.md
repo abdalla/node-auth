@@ -13,8 +13,23 @@ To avoid start from the very beginning using authentication and mongodb as datab
 
 # How to use
 To use it, you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
-![server.js](http://res.cloudinary.com/abdalla/image/upload/v1481067460/Screen_Shot_2016-12-06_at_6.30.54_PM_xllqfw.png)
-![config.js](http://res.cloudinary.com/abdalla/image/upload/v1481067536/Screen_Shot_2016-12-06_at_6.38.39_PM_urqtq2.png)
+
+___server.js___
+```javascript
+const server = app.listen(port, () => {
+    if(env !== 'test') {
+        mongoose.connect(config.database);
+    }
+});
+```
+
+___config.js___
+```javascript
+module.exports = {
+    'database': 'mongodb://localhost:27017/node-auth'
+}
+```
+
 
 # Running api
 ```
@@ -197,29 +212,29 @@ Response:
 
 ## Core libraries
 ### For App
-Express -  The most popular Node framework ( thinking to change to koa )
+[Express](https://expressjs.com) -  The most popular Node framework ( thinking to change to koa )
 
-Mongoose - Interact with our MongoDB database
+[Mongoose](http://mongoosejs.com) - Interact with our MongoDB database
 
-Morgan - Log requests to the console so we can see what is happening
+[Morgan](https://github.com/expressjs/morgan) - Log requests to the console so we can see what is happening
 
-body-parser - Get parameters from our POST requests
+[body-parser](https://github.com/expressjs/body-parser) - Get parameters from our POST requests
 
-jsonwebtoken - Create and Verify our JSON Web Tokens
+[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) - Create and Verify our JSON Web Tokens
 
-bluebird - Promise
+[bluebird](http://bluebirdjs.com/docs/getting-started.html) - Promise
 
 ### For Test
-Mocha - The testing framework
+[Mocha](https://mochajs.org) - The testing framework
 
-Chai - Gives you some useful tools for testing, such as expect/should functions.
+[Chai](http://chaijs.com) - Gives you some useful tools for testing, such as expect/should functions.
 
-Mockgoose - Allows you to run Mongoose in-memory instead of connecting to a persistent database.
+[Mockgoose](https://github.com/mockgoose/Mockgoose) - Allows you to run Mongoose in-memory instead of connecting to a persistent database.
 
-Factory-girl - For creating factories for your models.
+[Factory-girl](https://github.com/thoughtbot/factory_girl) - For creating factories for your models.
 
-Faker - For creating randomized data
+[Faker](https://github.com/stympy/faker) - For creating randomized data
 
-Supertest - For performing requests in your tests
+[Supertest](https://www.npmjs.com/package/supertest) - For performing requests in your tests
 
-Istanbul - JS code coverage tool 
+[Istanbul](https://www.npmjs.com/package/istanbul) - JS code coverage tool 

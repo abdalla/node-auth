@@ -11,7 +11,9 @@
     "start": "nodemon --exec npm run babel-node",
     "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec",
     "t-travis": "mocha --require babel-polyfill --recursive --compilers js:babel-register --reporter spec",
-    "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*"
+    "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*",
+    "test-cover2": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+     
   },
   "repository": {
     "type": "git",
@@ -29,10 +31,12 @@
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "factory-girl": "^4.0.0-beta.7",
     "faker": "^3.1.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.2.0",
     "mockgoose": "^6.0.8",
     "supertest": "^2.0.1"
   },

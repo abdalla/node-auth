@@ -8,6 +8,3 @@ notifications:
     email: false
 script:
     - npm run t-travis
-addons:
-    code_climate:
-        repo_token: cd0f720bb16d5a7054890036c28f7b14011bcd46541fd38c42935ac1b10672bd
