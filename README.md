@@ -1,8 +1,11 @@
-[![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Build Status](https://travis-ci.org/abdalla/node-auth.svg?branch=master)](https://travis-ci.org/abdalla/node-auth)
 [![bitHound Code](https://www.bithound.io/github/abdalla/node-auth/badges/code.svg)](https://www.bithound.io/github/abdalla/node-auth)
 [![bitHound Overall Score](https://www.bithound.io/github/abdalla/node-auth/badges/score.svg)](https://www.bithound.io/github/abdalla/node-auth)
 [![bitHound Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/dependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/devDependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
+[![Code Climate](https://codeclimate.com/github/abdalla/node-auth/badges/gpa.svg)](https://codeclimate.com/github/abdalla/node-auth)
+[![Test Coverage](https://codeclimate.com/github/abdalla/node-auth/badges/coverage.svg)](https://codeclimate.com/github/abdalla/node-auth/coverage)
+[![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 # NODE Auth
 It is a project to help to create an api using nodejs.
 
