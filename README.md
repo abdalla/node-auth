@@ -1,7 +1,8 @@
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 # NODE Auth
 It is a project to help to create an api using nodejs.
-To avoid start from the very begin using authentication and mongodb as database.
+
+To avoid start from the very beginning using authentication and mongodb as database.
 
 # How to use
 To use you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
