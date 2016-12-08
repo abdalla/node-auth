@@ -1,6 +1,6 @@
 'use strict';
 const requiredToken =  ( options, tokenValidator ) => {
-    return (req, res, next) => {
+    return function requiredToken(req, res, next) {
 
        if(!options.publicKey) throw 'publicKey is required';
 
@@ -13,7 +13,7 @@ const requiredToken =  ( options, tokenValidator ) => {
                 return res.status(403).send({
                     success: false,
                     message: 'Token is required.'
-                });
+                })
             };
 
             tokenValidator(token, function(err, decoded) {
@@ -24,11 +24,11 @@ const requiredToken =  ( options, tokenValidator ) => {
                     });
                 } else {
                     req.decoded = decoded;
-                    next();
+                    return next();
                 }
             });
         } else {
-            next();
+            return next();
         }
     };
 };
