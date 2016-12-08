@@ -2,6 +2,7 @@
 import chai, { expect } from 'chai';
 import request from 'supertest';
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import requiredToken from '../src/controllers/middleware/required-token';
 import { createDB, destroyDB } from './test-helper';
 import apiController from'../src/controllers/api-controller';
@@ -38,15 +39,13 @@ describe('Middleware', () => {
             .expect(500)
             .then((res) => {
                 expect(res.text).to.be.equal('publicKey is required\n');
-                server.close()
+                server.close();
                 done();
             })
             .catch((err) => {
-                server.close()
+                server.close();
                 done(err);
             });
-
-
     });
 
     it('Should get a message "The API is at...."', (done) => {
@@ -62,11 +61,11 @@ describe('Middleware', () => {
             .expect(200)
             .then((res) => {
                 expect(res.text).to.be.equal('The API is at http://url/api');
-                server.close()
+                server.close();
                 done();
             })
             .catch((err) => {
-                server.close()
+                server.close();
                 done(err);
             });
     });

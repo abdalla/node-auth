@@ -90,7 +90,7 @@ module.exports = (app, config) => {
                 success: false,
                 err: 'Id could not be null'
             });
-        };
+        }
 
         User.findById(req.params.id).then(user => {
             res.json({
@@ -164,9 +164,9 @@ module.exports = (app, config) => {
                     res.status(500).json({
                         success: false,
                         err
-                    });        
+                    });
                 });
-            }            
+            }
         })
         .catch(err => {
             res.status(500).json({

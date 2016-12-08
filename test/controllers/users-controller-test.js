@@ -516,9 +516,9 @@ describe('Users', () => {
                         .then((res) => {
                             request(server)
                                 .put(`/api/userpassword/${user._id}`)
-                                .send({ 
+                                .send({
                                     currentPassword : user.password,
-                                    newPassword: 'new_password'  
+                                    newPassword: 'new_password'
                                 })
                                 .set('x-access-token', _token)
                                 .expect(200)
@@ -528,7 +528,7 @@ describe('Users', () => {
                                     done();
                                 })
                                 .catch((err) => done(err));
-                        });                   
+                        });
                 });
         });
 
@@ -543,9 +543,9 @@ describe('Users', () => {
                         .then((res) => {
                             request(server)
                                 .put(`/api/userpassword/${user._id}`)
-                                .send({ 
+                                .send({
                                     currentPassword : 'wrong pwd',
-                                    newPassword: 'new_password'  
+                                    newPassword: 'new_password'
                                 })
                                 .set('x-access-token', _token)
                                 .expect(409)
@@ -558,7 +558,7 @@ describe('Users', () => {
                         });
                 });
         });
-               
+
 
         it('should NOT update a user password without new password', (done) => {
            factory.build('user')
@@ -571,7 +571,7 @@ describe('Users', () => {
                         .then((res) => {
                             request(server)
                                 .put(`/api/userpassword/${user._id}`)
-                                .send({ 
+                                .send({
                                     currentPassword : user.password
                                 })
                                 .set('x-access-token', _token)
@@ -588,9 +588,9 @@ describe('Users', () => {
         it('should NOT update a user password with invalid UserId', (done) => {
            request(server)
                 .put(`/api/userpassword/1234565`)
-                .send({ 
+                .send({
                     currentPassword : _user.password,
-                    newPassword: 'new_password'  
+                    newPassword: 'new_password'
                 })
                 .set('x-access-token', _token)
                 .expect(500)
@@ -604,7 +604,7 @@ describe('Users', () => {
         it('should NOT update a user password when given invalid credencials', (done) => {
            request(server)
                 .put(`/api/userpassword/${_user._id}`)
-                .send({ 
+                .send({
                     currentPassword : 'wrong pwd',
                     newPassword: 'new_password'
                 })
@@ -620,7 +620,7 @@ describe('Users', () => {
         it('should NOT update a user password with no credencials', (done) => {
            request(server)
                 .put(`/api/userpassword/${_user._id}`)
-                .send({ 
+                .send({
                     currentPassword : 'wrong pwd',
                     newPassword: 'new_password'
                 })

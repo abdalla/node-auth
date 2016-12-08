@@ -13,8 +13,8 @@ const requiredToken =  ( options, tokenValidator ) => {
                 return res.status(403).send({
                     success: false,
                     message: 'Token is required.'
-                })
-            };
+                });
+            }
 
             tokenValidator(token, function(err, decoded) {
                 if (err) {

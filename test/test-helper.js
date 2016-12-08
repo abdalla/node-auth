@@ -24,4 +24,4 @@ const destroyDB = () => {
 module.exports = {
     createDB,
     destroyDB
-}
+};
