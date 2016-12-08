@@ -198,7 +198,7 @@ module.exports = (app, config) => {
         });
     });
 
-    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup'] };
+    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
     const validToken = (token, cb) => {
         if (token) {
             jwt.verify(token, options.publicKey, function(err, decoded) {
