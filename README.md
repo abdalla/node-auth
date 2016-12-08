@@ -215,6 +215,7 @@ Response:
 ### Update user password
 Used to change the user password.
 
+___Verbose:___ `PUT`
 ```
 http://localhost:3000/api/userpassword/{userId}
 ```
