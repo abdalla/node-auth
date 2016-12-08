@@ -10,7 +10,7 @@ import config from '../src/config';
 
 const validToken = (token, cb) => {
     if (token) {
-        jwt.verify(token, options.publicKey, function(err, decoded) {
+        jwt.verify(token, '', function(err, decoded) {
             if (err) {
                 return cb('Failed to authenticate token');
             } else {
