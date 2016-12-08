@@ -49,7 +49,7 @@ module.exports = (app, config) => {
 
         User.findOne(filter).then(user => {
            if (!user || !user.validPassword(req.body.password)) {
-                res.json({ success: false, message: 'Authentication failed, email or password invalid.', token: null });
+                res.json({ success: false, err: 'Authentication failed, email or password invalid.', token: null });
             } else {
                 const token = jwt.sign(user, config.token.publicKey, {
                     expiresIn: config.token.expires.oneDay
@@ -57,7 +57,6 @@ module.exports = (app, config) => {
 
                 res.json({
                     success: true,
-                    message: 'enjoy',
                     token
                 });
             }
@@ -139,6 +138,35 @@ module.exports = (app, config) => {
                     err: 'User not found'
                 });
             }
+        })
+        .catch(err => {
+            res.status(500).json({
+                success: false,
+                err
+            });
+        });
+    });
+
+    router.put('/userpassword/:id', (req, res) => {
+        User.findById(req.params.id).then(user => {
+            if (!user || !user.validPassword(req.body.currentPassword)) {
+                res.status(409).json({ success: false, err: 'Current password invalid!', token: null });
+            } else {
+                user.password = req.body.newPassword;
+
+                user.save().then(user => {
+                    res.json({
+                        success: true,
+                        user
+                    });
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        success: false,
+                        err
+                    });        
+                });
+            }            
         })
         .catch(err => {
             res.status(500).json({

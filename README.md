@@ -122,7 +122,23 @@ Response:
 ```
 
 ### Get user by id
-NOT YET IMPLEMENTED
+___Verbose:___ `GET`
+```
+http://localhost:3000/api/user/{userId}
+```
+
+Header:
+```
+x-access-token: "<token>"
+```
+
+Response:
+```
+{
+  "success": true,
+  "user": { user information }
+}
+```
 
 ### Create new user
 Used to create a new user.
@@ -195,8 +211,32 @@ Response:
 ```
 
 ### Update user password
-NOT YET IMPLEMENTED
+```
+http://localhost:3000/api/userpassword/{userId}
+```
 
+Header:
+```
+Content-Type: application/json
+x-access-token: "<token>"
+```
+
+Body: 
+```
+{ 
+	currentPassword : 'currentPassword',
+  newPassword: 'newPassword'
+}
+```
+
+Response:
+```
+{
+  "success": true,
+  "user": { user information
+  }
+}
+```
 
 ### Delete an user
 Used to delete an user.

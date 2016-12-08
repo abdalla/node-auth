@@ -169,9 +169,6 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
        });
-
-
-
     });
 
     describe('Create', () =>{
@@ -505,6 +502,138 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
+    });
+
+    describe('Update user password', function () {
+        it('should update a user password when given the correct credentials', (done) => {
+           factory.build('user')
+                .then(user => {
+                    request(server)
+                        .post('/api/user')
+                        .send({ user : user })
+                        .set('x-access-token', _token)
+                        .expect(200)
+                        .then((res) => {
+                            request(server)
+                                .put(`/api/userpassword/${user._id}`)
+                                .send({ 
+                                    currentPassword : user.password,
+                                    newPassword: 'new_password'  
+                                })
+                                .set('x-access-token', _token)
+                                .expect(200)
+                                .then((res) => {
+                                    expect(res.body.success).to.be.equal(true);
+                                    expect(res.body.user).to.be.an('object');
+                                    done();
+                                })
+                                .catch((err) => done(err));
+                        });                   
+                });
+        });
+
+        it('should NOT update a user password with wrong current password', (done) => {
+           factory.build('user')
+                .then(user => {
+                    request(server)
+                        .post('/api/user')
+                        .send({ user : user })
+                        .set('x-access-token', _token)
+                        .expect(200)
+                        .then((res) => {
+                            request(server)
+                                .put(`/api/userpassword/${user._id}`)
+                                .send({ 
+                                    currentPassword : 'wrong pwd',
+                                    newPassword: 'new_password'  
+                                })
+                                .set('x-access-token', _token)
+                                .expect(409)
+                                .then((res) => {
+                                    expect(res.body.success).to.be.equal(false);
+                                    expect(res.body.err).to.be.equal('Current password invalid!');
+                                    done();
+                                })
+                                .catch((err) => done(err));
+                        });
+                });
+        });
+               
+
+        it('should NOT update a user password without new password', (done) => {
+           factory.build('user')
+                .then(user => {
+                    request(server)
+                        .post('/api/user')
+                        .send({ user : user })
+                        .set('x-access-token', _token)
+                        .expect(200)
+                        .then((res) => {
+                            request(server)
+                                .put(`/api/userpassword/${user._id}`)
+                                .send({ 
+                                    currentPassword : user.password
+                                })
+                                .set('x-access-token', _token)
+                                .expect(500)
+                                .then((res) => {
+                                    expect(res.body.success).to.be.equal(false);
+                                    done();
+                                })
+                                .catch((err) => done(err));
+                        });
+                });
+        });
+
+        it('should NOT update a user password with invalid UserId', (done) => {
+           request(server)
+                .put(`/api/userpassword/1234565`)
+                .send({ 
+                    currentPassword : _user.password,
+                    newPassword: 'new_password'  
+                })
+                .set('x-access-token', _token)
+                .expect(500)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+        it('should NOT update a user password when given invalid credencials', (done) => {
+           request(server)
+                .put(`/api/userpassword/${_user._id}`)
+                .send({ 
+                    currentPassword : 'wrong pwd',
+                    newPassword: 'new_password'
+                })
+                .set('x-access-token', '123456')
+                .expect(401)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+        it('should NOT update a user password with no credencials', (done) => {
+           request(server)
+                .put(`/api/userpassword/${_user._id}`)
+                .send({ 
+                    currentPassword : 'wrong pwd',
+                    newPassword: 'new_password'
+                })
+                .expect(403)
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
+        });
+
+
+
     });
 
     after(() => {
