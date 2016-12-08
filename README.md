@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/abdalla/node-auth.svg?branch=master)](https://travis-ci.org/abdalla/node-auth)
 [![bitHound Code](https://www.bithound.io/github/abdalla/node-auth/badges/code.svg)](https://www.bithound.io/github/abdalla/node-auth)
 [![bitHound Overall Score](https://www.bithound.io/github/abdalla/node-auth/badges/score.svg)](https://www.bithound.io/github/abdalla/node-auth)
-[![bitHound Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/dependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/abdalla/node-auth/badges/devDependencies.svg)](https://www.bithound.io/github/abdalla/node-auth/master/dependencies/npm)
 [![Code Climate](https://codeclimate.com/github/abdalla/node-auth/badges/gpa.svg)](https://codeclimate.com/github/abdalla/node-auth)
 [![Coverage Status](https://coveralls.io/repos/github/abdalla/node-auth/badge.svg?branch=master)](https://coveralls.io/github/abdalla/node-auth?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/abdalla/node-auth/badge.svg)](https://snyk.io/test/github/abdalla/node-auth)
