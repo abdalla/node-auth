@@ -122,6 +122,8 @@ Response:
 ```
 
 ### Get user by id
+Used to get a specific user.
+
 ___Verbose:___ `GET`
 ```
 http://localhost:3000/api/user/{userId}
@@ -211,6 +213,8 @@ Response:
 ```
 
 ### Update user password
+Used to change the user password.
+
 ```
 http://localhost:3000/api/userpassword/{userId}
 ```
