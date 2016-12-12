@@ -175,19 +175,20 @@ describe('Users', () => {
         it('should register a user when given the correct credentials', (done) => {
             let user = factory.build('user')
                 .then(user => {
-                    request(server)
+                    return ( request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
                         .expect(200)
-                        .then((res) => {
-                            expect(res.body.success).to.be.equal(true);
-                            expect(res.body.user).to.be.an('object');
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                )})
+                .then(res => {
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.user).to.be.an('object');
+                    done();
+                })
+                .catch((err) => done(err));
         });
+
 
         it('should NOT register a user whith NO credentials', (done) => {
             let user = factory.build('user')
@@ -508,81 +509,84 @@ describe('Users', () => {
         it('should update a user password when given the correct credentials', (done) => {
            factory.build('user')
                 .then(user => {
-                    request(server)
-                        .post('/api/user')
-                        .send({ user : user })
-                        .set('x-access-token', _token)
-                        .expect(200)
-                        .then((res) => {
-                            request(server)
-                                .put(`/api/userpassword/${user._id}`)
+                    user.password = '123456';
+                    return ( request(server)
+                                .post('/api/user')
+                                .send({ user : user })
+                                .set('x-access-token', _token)
+                                .expect(200));
+                })
+                .then(res => {
+                    res.body.user.password = '123456';
+                    return ( request(server)
+                                .put(`/api/userpassword/${res.body.user._id}`)
                                 .send({
-                                    currentPassword : user.password,
+                                    currentPassword: res.body.user.password,
                                     newPassword: 'new_password'
                                 })
                                 .set('x-access-token', _token)
-                                .expect(200)
-                                .then((res) => {
-                                    expect(res.body.success).to.be.equal(true);
-                                    expect(res.body.user).to.be.an('object');
-                                    done();
-                                })
-                                .catch((err) => done(err));
-                        });
-                });
+                                .expect(200));
+                })
+                .then(res => {
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.user).to.be.an('object');
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT update a user password with wrong current password', (done) => {
            factory.build('user')
                 .then(user => {
-                    request(server)
+                    return (request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(200)
-                        .then((res) => {
-                            request(server)
-                                .put(`/api/userpassword/${user._id}`)
-                                .send({
-                                    currentPassword : 'wrong pwd',
-                                    newPassword: 'new_password'
-                                })
-                                .set('x-access-token', _token)
-                                .expect(409)
-                                .then((res) => {
-                                    expect(res.body.success).to.be.equal(false);
-                                    expect(res.body.err).to.be.equal('Current password invalid!');
-                                    done();
-                                })
-                                .catch((err) => done(err));
-                        });
-                });
+                        .expect(200));
+                })
+                .then((res) => {
+                    return (request(server)
+                        .put(`/api/userpassword/${res.body.user._id}`)
+                        .send({
+                            currentPassword : 'wrong pwd',
+                            newPassword: 'new_password'
+                        })
+                        .set('x-access-token', _token)
+                        .expect(409));
+                })
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    expect(res.body.err).to.be.equal('Current password invalid!');
+                    done();
+                })
+                .catch((err) => done(err));
         });
-
 
         it('should NOT update a user password without new password', (done) => {
            factory.build('user')
                 .then(user => {
-                    request(server)
+                    user.password = '123456';
+                    return (request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(200)
-                        .then((res) => {
-                            request(server)
-                                .put(`/api/userpassword/${user._id}`)
-                                .send({
-                                    currentPassword : user.password
-                                })
-                                .set('x-access-token', _token)
-                                .expect(500)
-                                .then((res) => {
-                                    expect(res.body.success).to.be.equal(false);
-                                    done();
-                                })
-                                .catch((err) => done(err));
-                        });
-                });
+                        .expect(200));
+                })
+                .then((res) => {
+                    res.body.user.password = '123456';
+                    return (request(server)
+                        .put(`/api/userpassword/${res.body.user._id}`)
+                        .send({
+                            currentPassword : res.body.user.password
+                        })
+                        .set('x-access-token', _token)
+                        .expect(500));
+                })
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT update a user password with invalid UserId', (done) => {
@@ -631,9 +635,6 @@ describe('Users', () => {
                 })
                 .catch((err) => done(err));
         });
-
-
-
     });
 
     after(() => {
