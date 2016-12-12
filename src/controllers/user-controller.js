@@ -179,7 +179,7 @@ module.exports = (app, config) => {
                         user
                     });
                 } else {
-                    throw ( 'User not found' );
+                    throw( 'User not found' );
                 };
         })
         .catch(err => {
