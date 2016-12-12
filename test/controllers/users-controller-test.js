@@ -175,12 +175,12 @@ describe('Users', () => {
         it('should register a user when given the correct credentials', (done) => {
             let user = factory.build('user')
                 .then(user => {
-                    return ( request(server)
-                        .post('/api/user')
-                        .send({ user : user })
-                        .set('x-access-token', _token)
-                        .expect(200)
-                )})
+                    return request(server)
+                            .post('/api/user')
+                            .send({ user : user })
+                            .set('x-access-token', _token)
+                            .expect(200);
+                })
                 .then(res => {
                     expect(res.body.success).to.be.equal(true);
                     expect(res.body.user).to.be.an('object');
@@ -193,34 +193,34 @@ describe('Users', () => {
         it('should NOT register a user whith NO credentials', (done) => {
             let user = factory.build('user')
                 .then(user => {
-                    request(server)
-                        .post('/api/user')
-                        .send({ user : user })
-                        .expect(403)
-                        .then((res) => {
-                            expect(res.body.success).to.be.equal(false);
-                            expect(res.body.message).to.be.equal('Token is required.');
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                    return request(server)
+                            .post('/api/user')
+                            .send({ user : user })
+                            .expect(403);
+                })
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    expect(res.body.message).to.be.equal('Token is required.');
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user whith invalid credentials', (done) => {
             let user = factory.build('user')
                 .then(user => {
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token + '123456')
-                        .expect(401)
-                        .then((res) => {
-                            expect(res.body.success).to.be.equal(false);
-                            expect(res.body.message).to.be.equal('Failed to authenticate token');
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(401);
+                })
+                .then((res) => {
+                    expect(res.body.success).to.be.equal(false);
+                    expect(res.body.message).to.be.equal('Failed to authenticate token');
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         let existingUser = {};
@@ -229,102 +229,102 @@ describe('Users', () => {
                 .then(user => {
                     existingUser = user;
                     user.name = '';
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user with existend userName', (done) => {
             let user = factory.build('user')
                 .then(user => {
                     existingUser.email = 'other@email.com';
-                    request(server)
-                        .post('/api/user')
-                        .send({ user : existingUser })
-                        .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                    return request(server)
+                            .post('/api/user')
+                            .send({ user : existingUser })
+                            .set('x-access-token', _token)
+                            .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user with existend email', (done) => {
             let user = factory.build('user')
                 .then(user => {
                     existingUser.userName = 'otherUserName';
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : existingUser })
                         .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user when given the correct credentials and did not send email (required field)', (done) => {
             let user = factory.build('user')
                 .then(user => {
                     user.email = '';
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user when given the correct credentials and did not send userName (required field)', (done) => {
             let user = factory.build('user')
                 .then(user => {
                     user.userName = '';
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
 
         it('should NOT register a user when given the correct credentials and did not send password (required field)', (done) => {
             let user = factory.build('user')
                 .then(user => {
                     user.password = '';
-                    request(server)
+                    return request(server)
                         .post('/api/user')
                         .send({ user : user })
                         .set('x-access-token', _token)
-                        .expect(500)
-                        .then((res) => {
-                            expect(res.body.success).not.to.be.equal(true);
-                            done();
-                        })
-                        .catch((err) => done(err));
-                });
+                        .expect(500);
+                })
+                .then((res) => {
+                    expect(res.body.success).not.to.be.equal(true);
+                    done();
+                })
+                .catch((err) => done(err));
         });
     });
 
@@ -539,20 +539,20 @@ describe('Users', () => {
            factory.build('user')
                 .then(user => {
                     return (request(server)
-                        .post('/api/user')
-                        .send({ user : user })
-                        .set('x-access-token', _token)
-                        .expect(200));
+                                .post('/api/user')
+                                .send({ user : user })
+                                .set('x-access-token', _token)
+                                .expect(200));
                 })
                 .then((res) => {
                     return (request(server)
-                        .put(`/api/userpassword/${res.body.user._id}`)
-                        .send({
-                            currentPassword : 'wrong pwd',
-                            newPassword: 'new_password'
-                        })
-                        .set('x-access-token', _token)
-                        .expect(409));
+                                .put(`/api/userpassword/${res.body.user._id}`)
+                                .send({
+                                    currentPassword : 'wrong pwd',
+                                    newPassword: 'new_password'
+                                })
+                                .set('x-access-token', _token)
+                                .expect(409));
                 })
                 .then((res) => {
                     expect(res.body.success).to.be.equal(false);
@@ -567,20 +567,20 @@ describe('Users', () => {
                 .then(user => {
                     user.password = '123456';
                     return (request(server)
-                        .post('/api/user')
-                        .send({ user : user })
-                        .set('x-access-token', _token)
-                        .expect(200));
+                                .post('/api/user')
+                                .send({ user : user })
+                                .set('x-access-token', _token)
+                                .expect(200));
                 })
                 .then((res) => {
                     res.body.user.password = '123456';
                     return (request(server)
-                        .put(`/api/userpassword/${res.body.user._id}`)
-                        .send({
-                            currentPassword : res.body.user.password
-                        })
-                        .set('x-access-token', _token)
-                        .expect(500));
+                                .put(`/api/userpassword/${res.body.user._id}`)
+                                .send({
+                                    currentPassword : res.body.user.password
+                                })
+                                .set('x-access-token', _token)
+                                .expect(500));
                 })
                 .then((res) => {
                     expect(res.body.success).to.be.equal(false);
