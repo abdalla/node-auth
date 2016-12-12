@@ -31,7 +31,7 @@ module.exports = (app, config) => {
         });
 
         user.save().then(user => {
-            res.json({
+            return res.json({
                 success: true,
                 user
             });
@@ -47,31 +47,32 @@ module.exports = (app, config) => {
     router.post('/auth', (req, res) => {
         const filter = { email: req.body.email };
 
-        User.findOne(filter).then(user => {
-           if (!user || !user.validPassword(req.body.password)) {
-                res.json({ success: false, err: 'Authentication failed, email or password invalid.', token: null });
-            } else {
-                const token = jwt.sign(user, config.token.publicKey, {
-                    expiresIn: config.token.expires.oneDay
-                });
+        User.findOne(filter)
+            .then(user => {
+                if (!user || !user.validPassword(req.body.password)) {
+                        throw( 'Authentication failed, email or password invalid.' );
+                    } else {
+                        const token = jwt.sign(user, config.token.publicKey, {
+                            expiresIn: config.token.expires.oneDay
+                        });
 
-                res.json({
-                    success: true,
-                    token
+                        return res.json({
+                            success: true,
+                            token
+                        });
+                    }
+            })
+            .catch(err => {
+                res.status(500).json({
+                    success: false,
+                    err
                 });
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                 success: false,
-                 err
             });
-        });
     });
 
     router.get('/users', (req, res) => {
         User.find({}).then(users => {
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 users
             });
@@ -93,7 +94,7 @@ module.exports = (app, config) => {
         }
 
         User.findById(req.params.id).then(user => {
-            res.json({
+            return res.json({
                 success: true,
                 user
             });
@@ -110,7 +111,7 @@ module.exports = (app, config) => {
         let user = new User( req.body.user );
 
         user.save().then(user => {
-            res.json({
+            return res.json({
                  success: true,
                  user
             });
@@ -126,72 +127,63 @@ module.exports = (app, config) => {
     router.put('/user', (req, res) => {
         let toSave = new User( req.body.user );
 
-        User.findByIdAndUpdate(req.body.user._id, toSave, {new: true, runValidators: true}).then(user => {
-            if(user) {
-                res.json({
-                    success: true,
-                    user
-                });
-            } else {
-                res.status(500).json({
-                    success: false,
-                    err: 'User not found'
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                success: false,
-                err
-            });
-        });
-    });
-
-    router.put('/userpassword/:id', (req, res) => {
-        User.findById(req.params.id).then(user => {
-            if (!user || !user.validPassword(req.body.currentPassword)) {
-                res.status(409).json({ success: false, err: 'Current password invalid!', token: null });
-            } else {
-                user.password = req.body.newPassword;
-
-                user.save().then(user => {
-                    res.json({
+        User.findByIdAndUpdate(req.body.user._id, toSave, {new: true, runValidators: true})
+            .then(user => {
+                if(user) {
+                    return res.json({
                         success: true,
                         user
                     });
-                })
-                .catch(err => {
-                    res.status(500).json({
-                        success: false,
-                        err
-                    });
+                } else {
+                    throw( 'User not found' );
+                };
+            })
+            .catch(err => {
+                res.status(500).json({
+                    success: false,
+                    err
                 });
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                success: false,
-                err
             });
-        });
     });
 
-    router.delete('/user/:id', (req, res) => {
-        User.findByIdAndRemove(req.params.id, { passRawResult:  true }).then(user => {
-            if(user) {
-                res.json({
+    router.put('/userpassword/:id', (req, res) => {
+        User.findById(req.params.id)
+            .then(user => {
+                if (!user || !user.validPassword(req.body.currentPassword)) {
+                    throw( 'Current password invalid!' );
+                } else {
+                    user.password = req.body.newPassword;
+                    return user.save();
+                }
+            })
+            .then(user => {
+                return res.json({
                     success: true,
                     user
                 });
-            } else {
-                res.status(500).json({
+            })
+            .catch(err => {
+                return res.status(500).json({
                     success: false,
-                    err: 'User not found'
+                    err
                 });
-            }
+            });
+    });
+
+    router.delete('/user/:id', (req, res) => {
+        User.findByIdAndRemove(req.params.id, { passRawResult:  true })
+            .then(user => {
+                if(user) {
+                    return res.json({
+                        success: true,
+                        user
+                    });
+                } else {
+                    throw ( 'User not found' );
+                };
         })
         .catch(err => {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 err
             });
@@ -201,7 +193,7 @@ module.exports = (app, config) => {
     const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
     const validToken = (token, cb) => {
         if (token) {
-            jwt.verify(token, options.publicKey, function(err, decoded) {
+            jwt.verify(token, options.publicKey, (err, decoded) => {
                 if (err) {
                     return cb('Failed to authenticate token');
                 } else {

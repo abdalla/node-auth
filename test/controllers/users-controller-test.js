@@ -49,7 +49,7 @@ describe('Users', () => {
             request(server)
                 .post('/api/auth')
                 .send({ email: 'admin@node.com', password: 'admin123456' })
-                .expect(200)
+                .expect(500)
                 .then((res) => {
                     expect(res.body.success).to.be.equal(false);
                     chai.should().not.exist(res.body.token);
@@ -552,7 +552,7 @@ describe('Users', () => {
                                     newPassword: 'new_password'
                                 })
                                 .set('x-access-token', _token)
-                                .expect(409));
+                                .expect(500));
                 })
                 .then((res) => {
                     expect(res.body.success).to.be.equal(false);
