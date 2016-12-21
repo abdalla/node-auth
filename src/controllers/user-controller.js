@@ -1,11 +1,12 @@
-'use strict';
 import bodyParser from 'body-parser';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import requiredToken from './middleware/required-token';
-import User from '../db/models/user';
+import userService from '../services/user-service';
 
 module.exports = (app, config) => {
+    'use strict';
+
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
@@ -22,15 +23,7 @@ module.exports = (app, config) => {
     });
 
     router.post('/setup', (req, res) => {
-        const user = new User({
-            name: 'Admin',
-            userName: 'admin',
-            password: 'admin',
-            email: 'admin@node.com',
-            admin: true
-        });
-
-        user.save().then(user => {
+       userService.setupAdminUser().then(user => {
             return res.json({
                 success: true,
                 user
@@ -45,22 +38,28 @@ module.exports = (app, config) => {
     });
 
     router.post('/auth', (req, res) => {
-        const filter = { email: req.body.email };
+        userService.authentication(req.body.email, req.body.password)
+            .then(token => {
+                return res.json({
+                    success: true,
+                    token
+                });
+            })
+            .catch(err => {
+                return res.status(500).json({
+                        success: false,
+                        err
+                    });
+            });
+    });
 
-        User.findOne(filter)
-            .then(user => {
-                if (!user || !user.validPassword(req.body.password)) {
-                        throw( 'Authentication failed, email or password invalid.' );
-                    } else {
-                        const token = jwt.sign(user, config.token.publicKey, {
-                            expiresIn: config.token.expires.oneDay
-                        });
-
-                        return res.json({
-                            success: true,
-                            token
-                        });
-                    }
+    router.get('/users', (req, res) => {
+        userService.getUserByFilter({})
+            .then(users => {
+                return res.status(200).json({
+                    success: true,
+                    users
+                });
             })
             .catch(err => {
                 res.status(500).json({
@@ -68,21 +67,6 @@ module.exports = (app, config) => {
                     err
                 });
             });
-    });
-
-    router.get('/users', (req, res) => {
-        User.find({}).then(users => {
-            return res.status(200).json({
-                success: true,
-                users
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                success: false,
-                err
-            });
-        });
     });
 
     router.get('/user/:id', (req, res) => {
@@ -93,41 +77,39 @@ module.exports = (app, config) => {
             });
         }
 
-        User.findById(req.params.id).then(user => {
-            return res.json({
-                success: true,
-                user
+        userService.getUserById(req.params.id)
+            .then(user => {
+                return res.json({
+                    success: true,
+                    user
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    success: false,
+                    err
+                });
             });
-        })
-        .catch(err => {
-            res.status(500).json({
-                success: false,
-                err
-            });
-        });
     });
 
     router.post('/user', (req, res) => {
-        let user = new User( req.body.user );
-
-        user.save().then(user => {
-            return res.json({
-                 success: true,
-                 user
+        userService.createNewUser(req.body.user)
+            .then(user => {
+                return res.json({
+                    success: true,
+                    user
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    success: false,
+                    err
+                });
             });
-        })
-        .catch(err => {
-            res.status(500).json({
-                 success: false,
-                 err
-            });
-        });
     });
 
     router.put('/user', (req, res) => {
-        let toSave = new User( req.body.user );
-
-        User.findByIdAndUpdate(req.body.user._id, toSave, {new: true, runValidators: true})
+        userService.updateUser(req.body.user._id, req.body.user)
             .then(user => {
                 if(user) {
                     return res.json({
@@ -147,15 +129,29 @@ module.exports = (app, config) => {
     });
 
     router.put('/userpassword/:id', (req, res) => {
-        User.findById(req.params.id)
+        const newUserPassword = {
+            userId: req.params.id, 
+            currentPassword: req.body.currentPassword, 
+            newPassword: req.body.newPassword
+        };
+
+        userService.updateUserPassword(newUserPassword)
             .then(user => {
-                if (!user || !user.validPassword(req.body.currentPassword)) {
-                    throw( 'Current password invalid!' );
-                } else {
-                    user.password = req.body.newPassword;
-                    return user.save();
-                }
+                return res.json({
+                    success: true,
+                    user    
+                });
             })
+            .catch(err => {
+                return res.status(500).json({
+                    success: false,
+                    err
+                });
+            });
+    });
+
+    router.delete('/user/:id', (req, res) => {
+        userService.deleteUser(req.params.id)
             .then(user => {
                 return res.json({
                     success: true,
@@ -168,26 +164,6 @@ module.exports = (app, config) => {
                     err
                 });
             });
-    });
-
-    router.delete('/user/:id', (req, res) => {
-        User.findByIdAndRemove(req.params.id, { passRawResult:  true })
-            .then(user => {
-                if(user) {
-                    return res.json({
-                        success: true,
-                        user
-                    });
-                } else {
-                    throw( 'User not found' );
-                };
-        })
-        .catch(err => {
-            return res.status(500).json({
-                success: false,
-                err
-            });
-        });
     });
 
     const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
