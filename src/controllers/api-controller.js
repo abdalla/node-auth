@@ -1,6 +1,8 @@
 'use strict';
 import bodyParser from 'body-parser';
 import express from 'express';
+import jwt from 'jsonwebtoken';
+import requiredToken from './middleware/required-token';
 import userController from'./user-controller';
 
 module.exports = (app, config) => {
@@ -18,11 +20,27 @@ module.exports = (app, config) => {
         next();
     });
 
-    userController(app, config);
-
     router.get('/', (req, res) => {
         res.send('The API is at http://url/api');
     });
 
+
+    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
+    const validToken = (token, cb) => {
+        if (token) {
+            jwt.verify(token, options.publicKey, (err, decoded) => {
+                if (err) {
+                    return cb('Failed to authenticate token');
+                } else {
+                    return cb(null, decoded);
+                }
+            });
+        } else {
+            return cb('Token is required.');
+        }
+    };
+    app.use(requiredToken(options, validToken));
+    
+    userController(app, router, config);
     app.use('/api', router);
 };

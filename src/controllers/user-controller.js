@@ -1,16 +1,7 @@
-import bodyParser from 'body-parser';
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import requiredToken from './middleware/required-token';
 import userService from '../services/user-service';
 
-module.exports = (app, config) => {
+module.exports = (app, router, config) => {
     'use strict';
-
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
-
-    let router = express.Router();
 
     // middleware to use for all requests
     router.use((req, res, next) => {
@@ -165,23 +156,4 @@ module.exports = (app, config) => {
                 });
             });
     });
-
-    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
-    const validToken = (token, cb) => {
-        if (token) {
-            jwt.verify(token, options.publicKey, (err, decoded) => {
-                if (err) {
-                    return cb('Failed to authenticate token');
-                } else {
-                    return cb(null, decoded);
-                }
-            });
-        } else {
-            return cb('Token is required.');
-        }
-    };
-
-    app.use(requiredToken(options, validToken));
-
-    app.use('/api', router);
 };
