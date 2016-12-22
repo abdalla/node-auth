@@ -1,7 +1,7 @@
 {
   "name": "node-auth",
-  "version": "1.0.0",
-  "description": "##Some core libraries Mocha - The testing framework",
+  "version": "1.1.0",
+  "description": "##It is a project to help to create an api using nodejs.",
   "main": "server.js",
   "scripts": {
     "dev": "node src --exec \"babel-node src --presets es2015,stage-0\"",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://abdalla@bitbucket.org/abdalla/node-auth.git"
+    "url": "git+https://github.com/abdalla/node-auth.git"
   },
   "author": "Carlos Abdalla",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/abdalla/node-auth#readme",
+  "homepage": "https://github.com/abdalla/node-auth#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-istanbul": "^0.11.0",
+    "babel-istanbul": "^0.12.1",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-register": "^6.18.0",
