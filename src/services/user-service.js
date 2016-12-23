@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import User from '../db/models/user';
-import config from '../config'
+import config from '../config';
 
-const setupAdminUser = () => {
+const setupAdminUser = async () => {
     const user = new User({
         name: 'Admin',
         userName: 'admin',
@@ -11,74 +11,98 @@ const setupAdminUser = () => {
         admin: true
     });
 
-   
-
-    return user.save();
+    try { 
+        return await user.save();
+    } catch (err) {
+        throw err;
+    }
 };
 
-const authentication = (email, password) => {
+const authentication = async (email, password) => {
     const filter = { email };
-
-    return User.findOne(filter)
-        .then(user => {
-            if (!user || !user.validPassword(password)) {
-                    throw( 'Authentication failed, email or password invalid.' );
-            } else {
-                const token = jwt.sign(user, config.token.publicKey, {
-                    expiresIn: config.token.expires.oneDay
-                });
-                return token;
-            }
-        })
-        .catch(err => {
-            throw err;
-        });
+    try {
+        const user = await User.findOne(filter);
+        if (!user || !await user.validPassword(password)) {
+            throw 'Authentication failed, email or password invalid.';
+        } else {
+            const token = await jwt.sign(user, config.token.publicKey, {
+                expiresIn: config.token.expires.oneDay
+            });
+            return token;
+        }
+    } catch (err) {
+        throw err;
+    }
 };
 
-const createNewUser = user => {
+const createNewUser = async user => {
     const saveUser = new User( user );
-    return saveUser.save();
+    try { 
+        return await saveUser.save();
+    } catch (err) {
+        throw err;
+    }
 };
 
-const updateUser = (userId, user) => {
+const updateUser = async (userId, user) => {
     const toSave = new User( user );
-    return User.findByIdAndUpdate(userId, toSave, {new: true, runValidators: true});
+    try {
+        const changedUser = await User.findByIdAndUpdate(userId, toSave, {new: true, runValidators: true});
+        if (changedUser) {
+            return changedUser;
+        } else {
+            throw 'User not found' ;
+        }    
+    } catch (err) {
+        throw err;
+    }
 };
 
-const updateUserPassword = ({ userId, currentPassword, newPassword }) => {
-    return getUserById(userId)
-        .then(user => {
-            if (!user || !user.validPassword(currentPassword)) {
-                throw( 'Current password invalid!' );
-            } else {
-                user.password = newPassword;
-                return user.save();
-            }
-        })
-        .then(user => user)
-        .catch(err => {
-            throw err;
-        });
+const updateUserPassword = async ({ userId, currentPassword, newPassword }) => {
+    try {
+        const user = await getUserById(userId);
+        if (!user || !await user.validPassword(currentPassword)) {
+            throw 'Current password invalid!';
+        } else {
+            user.password = newPassword;
+            return await user.save(); 
+        }
+    } catch (err) {
+        throw err;
+    }
 };
 
-const deleteUser = userId => {
-    return User.findByIdAndRemove(userId, { passRawResult:  true })
-        .then(user => {
-            if(user){
-                return user;
-            } else {
-                throw 'User not found';
-            }
-        })
-        .catch(err => { throw err; });
+const deleteUser = async userId => {
+    try {
+        const user = await User.findByIdAndRemove(userId, { passRawResult:  true });
+        if (user){
+            return user;
+        } else {
+            throw 'User not found';
+        }
+    } catch (err) {
+        throw err;
+    }
 };
 
-const getUserById = userId => {    
-    return User.findById(userId);
+const getUserById = async userId => {
+    if (!userId) {
+        throw 'Id could not be null';
+    }
+    
+    try {
+        return User.findById(userId);
+    } catch (err) {
+        throw err;
+    }
 };
 
-const getUserByFilter = filter => {    
-    return User.find(filter);
+const getUserByFilter = async filter => {
+    try {
+        return await User.find(filter);
+    } catch (err) {
+        throw err;
+    }
 };
 
 module.exports = {

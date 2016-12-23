@@ -1,0 +1,46 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "es6": true,
+        "browser": true,
+        "commonjs": true,
+        "node": true,
+        "mocha": true,
+        "mongo": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "impliedStrict": true
+        }
+    },
+    "rules": {
+        "constructor-super": "warn",
+        "curly": "error",
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "no-console": "error",
+        //"require-await": "error",
+        "valid-typeof": "warn",
+        "quotes": ["error", "single"],
+        "keyword-spacing": ["error", { "before": true }],
+        "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+        // enable additional rules
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "semi": ["error", "always"],
+        "one-var": ["error", "never"],
+        // async await rules
+        "async-await/space-after-async": 1,
+        "async-await/space-after-await": 1
+    },
+    "extends": "eslint:recommended",
+    "plugins": [
+        "async-await"
+    ]
+}

@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import requiredToken from './middleware/required-token';
-import userController from'./user-controller';
+import userController from './user-controller';
 
 module.exports = (app, config) => {
     app.use(bodyParser.urlencoded({ extended: false }));
