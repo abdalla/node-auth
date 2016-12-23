@@ -5,12 +5,12 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import requiredToken from '../src/controllers/middleware/required-token';
 import { createDB, destroyDB } from './test-helper';
-import apiController from'../src/controllers/api-controller';
+import apiController from '../src/controllers/api-controller';
 import config from '../src/config';
 
 const validToken = (token, cb) => {
     if (token) {
-        jwt.verify(token, '', function(err, decoded) {
+        jwt.verify(token, '', (err, decoded) => {
             if (err) {
                 return cb('Failed to authenticate token');
             } else {
@@ -31,10 +31,10 @@ describe('Middleware', () => {
     });
 
     it('Should get an erro if publicKey property doesnt exists on options passed to middleware', (done) => {
-       const app = express();
-       app.use(requiredToken({}, validToken));
-       const server = app.listen('5054');
-       request(server)
+        const app = express();
+        app.use(requiredToken({}, validToken));
+        const server = app.listen('5054');
+        request(server)
             .post('/api/setup')
             .expect(500)
             .then((res) => {
@@ -49,14 +49,14 @@ describe('Middleware', () => {
     });
 
     it('Should get a message "The API is at...."', (done) => {
-       const options = { publicKey: 'token', ignoredRoutes: ['/api'] };
-       const app = express();
-       app.use(requiredToken(options, validToken));
+        const options = { publicKey: 'token', ignoredRoutes: ['/api'] };
+        const app = express();
+        app.use(requiredToken(options, validToken));
 
-       apiController(app, config);
+        apiController(app, config);
 
-       const server = app.listen('5054');
-       request(server)
+        const server = app.listen('5054');
+        request(server)
             .get('/api')
             .expect(200)
             .then((res) => {

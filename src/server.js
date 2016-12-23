@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import config from './config';
-import apiController from'./controllers/api-controller';
+import apiController from './controllers/api-controller';
 
 const app = express();
 const env = process.env.NODE_ENV || 'dev';
@@ -14,16 +14,18 @@ mongoose.Promise = bluebird;
 
 //morgan configuration
 app.use(morgan('dev', {
-    skip: function(req, res) { return env === 'test'; }
+    skip: () => { 
+        return env === 'test'; 
+    }
 }));
 
 apiController(app, config);
 
 const server = app.listen(port, () => {
-    if(env !== 'test') {
+    if (env !== 'test') {
         mongoose.connect(config.database);
         
-        console.log(`App listening at http://localhos:${server.address().port}`);
+        //console.log(`App listening at http://localhos:${server.address().port}`);
     }
 });
 
