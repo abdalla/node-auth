@@ -3,12 +3,6 @@ import userService from '../services/user-service';
 module.exports = (app, router) => {
     'use strict';
 
-    // HACK: middleware to use for all requests
-    router.use((req, res, next) => {
-        // do logging
-        next();
-    });
-
     router.get('/', (req, res) => {
         res.send('The API is at http://url/api');
     });

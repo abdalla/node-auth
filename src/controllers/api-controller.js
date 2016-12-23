@@ -11,6 +11,12 @@ module.exports = (app, config) => {
 
     let router = express.Router();
 
+    // HACK: middleware to use for all requests
+    router.use((req, res, next) => {
+        // do logging
+        next();
+    });
+
     //routes configuration
     app.use('/assets', express.static(`${__dirname}/public`));  
 
