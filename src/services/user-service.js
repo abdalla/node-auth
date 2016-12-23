@@ -86,10 +86,6 @@ const deleteUser = async userId => {
 };
 
 const getUserById = async userId => {
-    if (!userId) {
-        throw 'Id could not be null';
-    }
-    
     try {
         return User.findById(userId);
     } catch (err) {
