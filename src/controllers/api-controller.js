@@ -24,20 +24,15 @@ module.exports = (app, config) => {
         res.send('The API is at http://url/api');
     });
 
-
     const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
     const validToken = (token, cb) => {
-        if (token) {
-            jwt.verify(token, options.publicKey, (err, decoded) => {
-                if (err) {
-                    return cb('Failed to authenticate token');
-                } else {
-                    return cb(null, decoded);
-                }
-            });
-        } else {
-            return cb('Token is required.');
-        }
+        jwt.verify(token, options.publicKey, (err, decoded) => {
+            if (err) {
+                return cb('Failed to authenticate token');
+            } else {
+                return cb(null, decoded);
+            }
+        });
     };
     app.use(requiredToken(options, validToken));
     
