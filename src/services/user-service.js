@@ -102,12 +102,12 @@ const getUserByFilter = async filter => {
 };
 
 module.exports = {
-    setupAdminUser,
+    authentication,
     createNewUser,
-    updateUser,
-    updateUserPassword,
     deleteUser,
-    getUserById,
     getUserByFilter,
-    authentication
+    getUserById,
+    setupAdminUser,
+    updateUser,
+    updateUserPassword
 };
