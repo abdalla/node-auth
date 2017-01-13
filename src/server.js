@@ -1,32 +1,53 @@
 'use strict';
 import express from 'express';
 import morgan from 'morgan';
-import mongoose from 'mongoose';
-import bluebird from 'bluebird';
 import config from './config';
 import apiController from './controllers/api-controller';
+import db from './db';
 
 const app = express();
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
 
-mongoose.Promise = bluebird;
+
 
 //morgan configuration
 app.use(morgan('dev', {
-    skip: () => { 
-        return env === 'test'; 
+    skip: () => {
+        return env === 'test';
     }
 }));
 
 apiController(app, config);
 
-const server = app.listen(port, () => {
+const dbConnect = () => {
     if (env !== 'test') {
-        mongoose.connect(config.database);
-        
-        //console.log(`App listening at http://localhos:${server.address().port}`);
+        db.init();
+        db.connect(config.database);
     }
+};
+
+dbConnect();
+
+const server = app.listen(port);
+
+const stopServer = () => {
+    server.close();
+};
+
+server.on('close', function () {
+    db.disconnect();
 });
+
+// listen for TERM signal .e.g. kill
+process.on('SIGTERM', function () {
+    stopServer();
+});
+
+// listen for INT signal e.g. Ctrl-C
+process.on('SIGINT', function () {
+    stopServer();
+});
+
 
 module.exports = server;

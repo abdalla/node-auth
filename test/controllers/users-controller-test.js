@@ -53,7 +53,7 @@ describe ('Users', () => {
                 await chai.should().not.exist(res.body.token);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
     });
@@ -68,8 +68,8 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(true);
                 await expect(res.body.users).to.be.an('array');
             } catch (err) {
-                throw err;   
-            } 
+                throw err;
+            }
         });
 
         it('should NOT get all users passing id and given the correct credentials', async () => {
@@ -80,7 +80,7 @@ describe ('Users', () => {
                     .expect(404);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT get all users passing invalid credentials', async () => {
@@ -93,7 +93,7 @@ describe ('Users', () => {
                 await expect(res.body.message).to.be.equal('Failed to authenticate token');
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT get all users with no credentials', async () => {
@@ -105,7 +105,7 @@ describe ('Users', () => {
                 await expect(res.body.message).to.be.equal('Token is required.');
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should get user when given the correct credentials', async () => {
@@ -117,10 +117,10 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(true);
                 await expect(res.body.user).to.be.an('object');
                 await expect(res.body.user._id).to.be.equal(_user._id);
-                
+
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT get user without id', async () => {
@@ -143,7 +143,7 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should get user with incorrect token', async () => {
@@ -155,7 +155,7 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should get user without token', async () => {
@@ -166,7 +166,7 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
     });
 
@@ -209,7 +209,7 @@ describe ('Users', () => {
                                     .send({ user : user })
                                     .set('x-access-token', _token + '123456')
                                     .expect(401);
-                                    
+
                 await expect(res.body.success).to.be.equal(false);
                 await expect(res.body.message).to.be.equal('Failed to authenticate token');
             } catch (err) {
@@ -228,7 +228,7 @@ describe ('Users', () => {
                                     .send({ user : user })
                                     .set('x-access-token', _token)
                                     .expect(500);
-                
+
                 await expect(res.body.success).not.to.be.equal(true);
             } catch (err) {
                 throw err;
@@ -243,7 +243,7 @@ describe ('Users', () => {
                                     .send({ user : existingUser })
                                     .set('x-access-token', _token)
                                     .expect(500);
-                await expect(res.body.success).not.to.be.equal(true); 
+                await expect(res.body.success).not.to.be.equal(true);
             } catch (err) {
                 throw err;
             }
@@ -273,7 +273,7 @@ describe ('Users', () => {
                                 .send({ user : user })
                                 .set('x-access-token', _token)
                                 .expect(500);
-                await expect(res.body.success).not.to.be.equal(true); 
+                await expect(res.body.success).not.to.be.equal(true);
             } catch (err) {
                 throw err;
             }
@@ -366,7 +366,7 @@ describe ('Users', () => {
                 await expect(res.body.message).to.be.equal('Failed to authenticate token');
             } catch (err) {
                 throw err;
-            } 
+            }
             let _userUpdate = {
                 _id: _user._id,
                 name: 'John Due',
@@ -389,7 +389,7 @@ describe ('Users', () => {
                     .send({ user : _userUpdate })
                     .set('x-access-token', _token)
                     .expect(500);
-               
+
                 await expect(res.body.success).to.be.equal(false);
 
             } catch (err) {
@@ -415,7 +415,7 @@ describe ('Users', () => {
                 await expect(res.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
     });
 
@@ -458,7 +458,7 @@ describe ('Users', () => {
                 await chai.should().not.exist(res.body.user);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT delete a user passing NO credentials', async () => {
@@ -470,7 +470,7 @@ describe ('Users', () => {
                 await chai.should().not.exist(res.body.user);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT delete a user Without ID', async () => {
@@ -481,7 +481,7 @@ describe ('Users', () => {
                     .expect(404);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
     });
 
@@ -505,10 +505,10 @@ describe ('Users', () => {
                         .set('x-access-token', _token)
                         .expect(200);
                 await expect(res.body.success).to.be.equal(true);
-                await expect(res.body.user).to.be.an('object'); 
+                await expect(res.body.user).to.be.an('object');
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT update a user password with wrong current password', async () => {
@@ -519,7 +519,7 @@ describe ('Users', () => {
                                     .send({ user : user })
                                     .set('x-access-token', _token)
                                     .expect(200);
-                
+
                 const res2 = await request(server)
                                     .put(`/api/userpassword/${res.body.user._id}`)
                                     .send({
@@ -528,12 +528,12 @@ describe ('Users', () => {
                                     })
                                     .set('x-access-token', _token)
                                     .expect(500);
-                
+
                 await expect(res2.body.success).to.be.equal(false);
                 await expect(res2.body.err).to.be.equal('Current password invalid!');
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT update a user password without new password', async () => {
@@ -556,7 +556,7 @@ describe ('Users', () => {
                 await expect(res2.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT update a user password with invalid UserId', async () => {
@@ -569,11 +569,11 @@ describe ('Users', () => {
                     })
                     .set('x-access-token', _token)
                     .expect(500);
-    
+
                 await expect(res.body.success).to.be.equal(false);
             } catch (err) {
                 throw err;
-            } 
+            }
         });
 
         it('should NOT update a user password when given invalid credencials', async () => {

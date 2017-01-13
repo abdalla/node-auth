@@ -7,25 +7,20 @@ import { createDB, destroyDB } from './test-helper';
 import apiController from '../src/controllers/api-controller';
 import config from '../src/config';
 
+
 // TODO: try to avoid throw err
 describe('Middleware', () => {
-    before((done) => {
-        chai.config.includeStack = true;
-        createDB(() => {
-            done();
-        });
-    });
 
     it('Should get an erro if publicKey property doesnt exists on options passed to middleware', async () => {
         const app = express();
         app.use(requiredToken({}, apiController.validToken));
         const server = app.listen('5054');
-        
+
         try {
             const res = await request(server)
                 .post('/api/setup')
                 .expect(500);
-            
+
             await expect(res.text).to.be.equal('publicKey is required\n');
             server.close();
         } catch (err) {
@@ -47,7 +42,7 @@ describe('Middleware', () => {
             const res = await request(server)
                 .get('/api')
                 .expect(200);
-            
+
             await expect(res.text).to.be.equal('The API is at http://url/api');
             server.close();
 
@@ -60,7 +55,7 @@ describe('Middleware', () => {
     it('Should get a message "Token is required."', async () => {
         const app = express();
         const options = { publicKey: 'mykey' };
-        
+
         apiController(app, config);
 
         app.use(requiredToken(options, apiController.validToken));
@@ -74,7 +69,7 @@ describe('Middleware', () => {
             server.close();
         } catch (err) {
             throw err;
-        } 
+        }
     });
 
     after(() => {
