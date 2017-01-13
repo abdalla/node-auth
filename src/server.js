@@ -50,4 +50,7 @@ process.on('SIGINT', function () {
 });
 
 
-module.exports = server;
+module.exports = {
+    server,
+    stopServer
+};

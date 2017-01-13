@@ -1,9 +1,8 @@
 'use strict';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import request from 'supertest';
 import express from 'express';
 import requiredToken from '../src/controllers/middleware/required-token';
-import { createDB, destroyDB } from './test-helper';
 import apiController from '../src/controllers/api-controller';
 import config from '../src/config';
 
@@ -70,9 +69,5 @@ describe('Middleware', () => {
         } catch (err) {
             throw err;
         }
-    });
-
-    after(() => {
-        destroyDB();
     });
 });

@@ -2,7 +2,7 @@
 import chai, { expect } from 'chai';
 import request from 'supertest';
 import factory from '../factory';
-import server from '../../src/server';
+import { server, stopServer } from '../../src/server';
 import { createDB, destroyDB } from '../test-helper';
 
 describe ('Users', () => {
@@ -607,6 +607,7 @@ describe ('Users', () => {
             }
         });
         after(() => {
+            stopServer();
             destroyDB();
         });
     });
