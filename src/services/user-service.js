@@ -1,27 +1,18 @@
 import jwt from 'jsonwebtoken';
-import User from '../db/models/user';
+import userDb from '../db/user-db.js';
 import config from '../config';
 
 const setupAdminUser = async () => {
-    const user = new User({
-        name: 'Admin',
-        userName: 'admin',
-        password: 'admin',
-        email: 'admin@node.com',
-        admin: true
-    });
-
     try { 
-        return await user.save();
+        return await userDb.seed();
     } catch (err) {
         throw err;
     }
 };
 
 const authentication = async (email, password) => {
-    const filter = { email };
     try {
-        const user = await User.findOne(filter);
+        const user = await userDb.getByEmail(email);
         if (!user || !await user.validPassword(password)) {
             throw 'Authentication failed, email or password invalid.';
         } else {
@@ -35,24 +26,33 @@ const authentication = async (email, password) => {
     }
 };
 
+const getUserById = async userId => {
+    try {
+        return await userDb.getById(userId);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getUserByFilter = async filter => {
+    try {
+        return await userDb.getByFilter(filter);
+    } catch (err) {
+        throw err;
+    }
+};
+
 const createNewUser = async user => {
-    const saveUser = new User( user );
     try { 
-        return await saveUser.save();
+        return await userDb.create(user);
     } catch (err) {
         throw err;
     }
 };
 
 const updateUser = async (userId, user) => {
-    const toSave = new User( user );
     try {
-        const changedUser = await User.findByIdAndUpdate(userId, toSave, {new: true, runValidators: true});
-        if (changedUser) {
-            return changedUser;
-        } else {
-            throw 'User not found' ;
-        }    
+        return await userDb.update(userId, user);
     } catch (err) {
         throw err;
     }
@@ -60,12 +60,12 @@ const updateUser = async (userId, user) => {
 
 const updateUserPassword = async ({ userId, currentPassword, newPassword }) => {
     try {
-        const user = await getUserById(userId);
+        const user = await userDb.getById(userId);
         if (!user || !await user.validPassword(currentPassword)) {
             throw 'Current password invalid!';
         } else {
             user.password = newPassword;
-            return await user.save(); 
+            return await userDb.save(user); 
         }
     } catch (err) {
         throw err;
@@ -74,40 +74,19 @@ const updateUserPassword = async ({ userId, currentPassword, newPassword }) => {
 
 const deleteUser = async userId => {
     try {
-        const user = await User.findByIdAndRemove(userId, { passRawResult:  true });
-        if (user){
-            return user;
-        } else {
-            throw 'User not found';
-        }
-    } catch (err) {
-        throw err;
-    }
-};
-
-const getUserById = async userId => {
-    try {
-        return User.findById(userId);
-    } catch (err) {
-        throw err;
-    }
-};
-
-const getUserByFilter = async filter => {
-    try {
-        return await User.find(filter);
+        return await userDb.delete(userId);
     } catch (err) {
         throw err;
     }
 };
 
 module.exports = {
+    setupAdminUser,
     authentication,
+    getUserById,
+    getUserByFilter,
     createNewUser,
     deleteUser,
-    getUserByFilter,
-    getUserById,
-    setupAdminUser,
     updateUser,
     updateUserPassword
 };
