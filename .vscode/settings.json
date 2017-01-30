@@ -2,5 +2,6 @@
     "eslint.enable": true,
     "editor.rulers": [80, 100],
     "editor.tabSize": 4,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "vsicons.presets.angular": false
 }
