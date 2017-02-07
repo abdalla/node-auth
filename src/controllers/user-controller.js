@@ -104,13 +104,13 @@ module.exports = (app, router) => {
                 currentPassword: req.body.currentPassword,
                 newPassword: req.body.newPassword
             };
-            
+
             const user = await userService.updateUserPassword(newUserPassword);
             return res.json({
                 success: true,
                 user
             });
-        
+
         } catch (err) {
             return res.status(500).json({
                 success: false,

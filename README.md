@@ -31,7 +31,7 @@ module.exports = {
 
 
 # Running api
-```
+```zsh
 1 - git clone https://github.com/abdalla/node-auth.git
 2 - npm install
 3 - npm start
@@ -40,14 +40,14 @@ module.exports = {
 # Running tests
 To run the tests you don't need to have mongodb installed, we are using mockgoose to simulale on.
 
-Running tests to make sure everything is working good. 
+Running tests to make sure everything is working good.
 
 It is pretty simple...
+```zsh
+npm test
 ```
-npm t
-```
-or to get coverage statistics 
-```
+or to get coverage statistics
+```zsh
 npm run test-cover
 ```
 
@@ -61,7 +61,7 @@ http://localhost:3000/api/setup
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information }
@@ -81,8 +81,8 @@ Header:
 Content-Type: application/json
 ```
 
-Body: 
-```
+Body:
+```json
 {
 	"email": "admin@node.com",
 	"password": "admin"
@@ -90,7 +90,7 @@ Body:
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "message": "enjoy",
@@ -107,12 +107,12 @@ http://localhost:3000/api/users
 ```
 
 Header:
-```
+```json
 x-access-token: "<token>"
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "users": []
@@ -128,12 +128,12 @@ http://localhost:3000/api/user/{userId}
 ```
 
 Header:
-```
+```json
 x-access-token: "<token>"
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information }
@@ -149,26 +149,26 @@ http://localhost:3000/api/user
 ```
 
 Header:
-```
+```json
 Content-Type: application/json
 x-access-token: "<token>"
 ```
 
-Body: 
-```
-{ 
-	"user": { 
-    	"name": "user full name",
-    	"userName": "user name",
-    	"password": "password",
-    	"email": "email@email.com",
-    	"admin": false
-	} 
+Body:
+```json
+{
+  "user": {
+    "name": "user full name",
+    "userName": "user name",
+    "password": "password",
+    "email": "email@email.com",
+    "admin": false
+  }
 }
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information }
@@ -184,26 +184,26 @@ http://localhost:3000/api/user
 ```
 
 Header:
-```
+```json
 Content-Type: application/json
 x-access-token: "<token>"
 ```
 
-Body: 
-```
-{ 
-	"user": {
-	    "_id": REQUIRED,
-        "name": "user full name (optional)",
-    	"userName": "user name  (optional)",
-    	"email": "email@email.com  (optional)",
-    	"admin": false  (optional)
-  	}
+Body:
+```json
+{
+  "user": {
+    "_id": REQUIRED,
+    "name": "user full name (optional)",
+    "userName": "user name  (optional)",
+    "email": "email@email.com  (optional)",
+    "admin": false  (optional)
+  }
 }
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information }
@@ -219,21 +219,21 @@ http://localhost:3000/api/userpassword/{userId}
 ```
 
 Header:
-```
+```json
 Content-Type: application/json
 x-access-token: "<token>"
 ```
 
-Body: 
-```
-{ 
-	currentPassword : 'currentPassword',
+Body:
+```json
+{
+  currentPassword : 'currentPassword',
   newPassword: 'newPassword'
 }
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information
@@ -250,12 +250,12 @@ http://localhost:3000/api/user/<userId>
 ```
 
 Header:
-```
+```json
 x-access-token: "<token>"
 ```
 
 Response:
-```
+```json
 {
   "success": true,
   "user": { user information }
@@ -289,4 +289,4 @@ Response:
 
 [Supertest](https://www.npmjs.com/package/supertest) - For performing requests in your tests
 
-[Istanbul](https://www.npmjs.com/package/istanbul) - JS code coverage tool 
+[Istanbul](https://www.npmjs.com/package/istanbul) - JS code coverage tool
