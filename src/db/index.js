@@ -3,13 +3,13 @@ import bluebird from 'bluebird';
 
 module.exports = {
     mongoose,
-    init : () => {
+    init: () => {
         mongoose.Promise = bluebird;
     },
-    connect : async (database) => {
+    connect: async (database) => {
         return await mongoose.connect(database);
     },
-    disconnect : async () => {
+    disconnect: async () => {
         return await mongoose.connection.close();
     }
 };

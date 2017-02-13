@@ -18,17 +18,7 @@ module.exports = (app, config) => {
     });
 
     //routes configuration
-    app.use('/assets', express.static(`${__dirname}/public`));  
-
-    // middleware to use for all requests
-    router.use((req, res, next) => {
-        // do logging
-        next();
-    });
-
-    router.get('/', (req, res) => {
-        res.send('The API is at http://url/api');
-    });
+    app.use('/assets', express.static(`${__dirname}/public`));
 
     const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
     const validToken = (token, cb) => {
@@ -41,7 +31,7 @@ module.exports = (app, config) => {
         });
     };
     app.use(requiredToken(options, validToken));
-    
+
     userController(app, router, config);
     app.use('/api', router);
 };

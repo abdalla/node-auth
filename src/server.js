@@ -9,8 +9,6 @@ const app = express();
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
 
-
-
 //morgan configuration
 app.use(morgan('dev', {
     skip: () => {
@@ -20,14 +18,8 @@ app.use(morgan('dev', {
 
 apiController(app, config);
 
-const dbConnect = () => {
-    if (env !== 'test') {
-        db.init();
-        db.connect(config.database);
-    }
-};
-
-dbConnect();
+db.init();
+db.connect(config.database);
 
 const server = app.listen(port);
 
@@ -48,7 +40,6 @@ process.on('SIGTERM', function () {
 process.on('SIGINT', function () {
     stopServer();
 });
-
 
 module.exports = {
     server,

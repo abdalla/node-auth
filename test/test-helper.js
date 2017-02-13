@@ -2,6 +2,7 @@
 import mockgoose from 'mockgoose';
 import db from '../src/db';
 
+
 /*
  * Creates and/or connects to a mongo test database in memory
  * @param {function} cb callback function
