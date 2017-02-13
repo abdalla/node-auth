@@ -11,7 +11,7 @@ It is a project to help to create an api using nodejs.
 To avoid start from the very beginning using authentication and mongodb as database.
 
 # How to use
-To use it, you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
+To use it, you will need to have a mongodb server and change it's config on `config.js` into `src` folder.
 
 ___config.js___
 ```javascript
