@@ -20,7 +20,10 @@ module.exports = (app, config) => {
     //routes configuration
     app.use('/assets', express.static(`${__dirname}/public`));
 
-    const options = { publicKey: config.token.publicKey, ignoredRoutes: ['/api/auth', '/api/setup', '/api'] };
+    const options = {
+        publicKey: config.token.publicKey,
+        ignoredRoutes: ['/api/auth', '/api/setup', '/api']
+    };
     const validToken = (token, cb) => {
         jwt.verify(token, options.publicKey, (err, decoded) => {
             if (err) {
