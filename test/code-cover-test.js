@@ -20,7 +20,7 @@ describe('Middleware', () => {
                 .post('/api/setup')
                 .expect(500);
 
-            await expect(res.text).to.be.equal('publicKey is required\n');
+            await expect(res.text).to.contains('publicKey is required');
             server.close();
         } catch (err) {
             server.close();
