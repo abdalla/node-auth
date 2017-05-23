@@ -6,9 +6,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/abdalla/node-auth/badge.svg)](https://snyk.io/test/github/abdalla/node-auth)
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 # NODE Auth
-It is a project to help to create an api using nodejs.
-
-To avoid start from the very beginning using authentication and mongodb as database.
+It is a project to help you to create an api using nodejs, with this kit, you will avoid starting from the very beginning using authentication and MongoDB as a database.
 
 # How to use
 To use it, you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
