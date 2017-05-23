@@ -9,16 +9,7 @@
 It is a project to help you to create an api using nodejs, with this kit, you will avoid starting from the very beginning using authentication and MongoDB as a database.
 
 # How to use
-To use it, you will need to have a mongodb server and change it's config on `server.js` or `config.js` both in `src` folder.
-
-___server.js___
-```javascript
-const server = app.listen(port, () => {
-    if(env !== 'test') {
-        mongoose.connect(config.database);
-    }
-});
-```
+To use it, you will need to have a mongodb server and change it's config on `config.js` into `src` folder.
 
 ___config.js___
 ```javascript
