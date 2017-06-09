@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/abdalla/node-auth/badge.svg?branch=master)](https://coveralls.io/github/abdalla/node-auth?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/abdalla/node-auth/badge.svg)](https://snyk.io/test/github/abdalla/node-auth)
 [![PRs Welcome](https://img.shields.io/badge/prs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![NSP Status](https://nodesecurity.io/orgs/msdev/projects/6caad752-1ee9-49eb-a12c-b5a3c4a79f38/badge)](https://nodesecurity.io/orgs/msdev/projects/6caad752-1ee9-49eb-a12c-b5a3c4a79f38)
 # NODE Auth
 It is a project to help you to create an api using nodejs, with this kit, you will avoid starting from the very beginning using authentication and MongoDB as a database.
 
