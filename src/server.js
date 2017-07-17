@@ -17,7 +17,6 @@ app.use(morgan('dev', {
 }));
 
 apiController(app, config);
-
 db.init();
 db.connect(config.database);
 
