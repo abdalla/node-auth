@@ -34,10 +34,10 @@
     "coveralls": "^2.11.15",
     "eslint": "^3.13.1",
     "eslint-plugin-async-await": "0.0.0",
-    "factory-girl": "^4.0.0-beta.7",
+    "factory-girl": "^4.3.0",
     "faker": "^3.1.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.2",
     "mocha-lcov-reporter": "^1.2.0",
     "mockgoose": "^6.0.8",
     "supertest": "^2.0.1"
@@ -48,7 +48,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.2.1",
-    "mongoose": "^4.7.6",
-    "morgan": "^1.7.0"
+    "mongoose": "^4.11.3",
+    "morgan": "^1.8.2"
   }
 }
