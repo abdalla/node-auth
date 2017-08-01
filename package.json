@@ -9,7 +9,7 @@
     "babel-node": "./node_modules/babel-cli/bin/babel-node.js ./src/server.js",
     "start": "nodemon --exec npm run babel-node",
     "test": "NODE_ENV=test mocha test --timeout 120000 --recursive --compilers js:babel-register --reporter spec",
-    "t-travis": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul --timeout 120000 cover node_modules/.bin/_mocha -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose",
+    "t-travis": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info",
     "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*"
   },
   "repository": {
@@ -22,7 +22,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
-    "babel-istanbul": "^0.12.1",
+    "babel-istanbul": "^0.12.2",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
