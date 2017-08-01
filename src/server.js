@@ -10,11 +10,13 @@ const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
 
 //morgan configuration
-app.use(morgan('dev', {
-    skip: () => {
-        return env === 'test';
-    }
-}));
+app.use(
+	morgan('dev', {
+		skip: () => {
+			return env === 'test';
+		}
+	})
+);
 
 apiController(app, config);
 db.init();
@@ -23,24 +25,24 @@ db.connect(config.database);
 const server = app.listen(port);
 
 const stopServer = () => {
-    server.close();
+	server.close();
 };
 
-server.on('close', function () {
-    db.disconnect();
+server.on('close', function() {
+	db.disconnect();
 });
 
 // listen for TERM signal .e.g. kill
-process.on('SIGTERM', function () {
-    stopServer();
+process.on('SIGTERM', function() {
+	stopServer();
 });
 
 // listen for INT signal e.g. Ctrl-C
-process.on('SIGINT', function () {
-    stopServer();
+process.on('SIGINT', function() {
+	stopServer();
 });
 
 module.exports = {
-    server,
-    stopServer
+	server,
+	stopServer
 };
