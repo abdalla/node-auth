@@ -11,7 +11,9 @@ let mockgoose = new Mockgoose(db.mongoose);
 const createDB = async cb => {
 	mockgoose.prepareStorage().then(() => {
 		db.init();
-		db.connect('memory');
+		db.connect('memory', function(err) {
+			done(err);
+		});
 		cb();
 	});
 };
