@@ -6,35 +6,35 @@ import requiredToken from './middleware/required-token';
 import userController from './user-controller';
 
 module.exports = (app, config) => {
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
 
-    let router = express.Router();
+	let router = express.Router();
 
-    // HACK: middleware to use for all requests
-    router.use((req, res, next) => {
-        // do logging
-        next();
-    });
+	// HACK: middleware to use for all requests
+	router.use((req, res, next) => {
+		// do logging
+		next();
+	});
 
-    //routes configuration
-    app.use('/assets', express.static(`${__dirname}/public`));
+	//routes configuration
+	app.use('/assets', express.static(`${__dirname}/public`));
 
-    const options = {
-        publicKey: config.token.publicKey,
-        ignoredRoutes: ['/api/auth', '/api/setup', '/api']
-    };
-    const validToken = (token, cb) => {
-        jwt.verify(token, options.publicKey, (err, decoded) => {
-            if (err) {
-                return cb('Failed to authenticate token');
-            } else {
-                return cb(null, decoded);
-            }
-        });
-    };
-    app.use(requiredToken(options, validToken));
+	const options = {
+		publicKey: config.token.publicKey,
+		ignoredRoutes: ['/api/auth', '/api/setup', '/api']
+	};
+	const validToken = (token, cb) => {
+		jwt.verify(token, options.publicKey, (err, decoded) => {
+			if (err) {
+				return cb('Failed to authenticate token');
+			} else {
+				return cb(null, decoded);
+			}
+		});
+	};
+	app.use(requiredToken(options, validToken));
 
-    userController(app, router, config);
-    app.use('/api', router);
+	userController(app, router, config);
+	app.use('/api', router);
 };
