@@ -1,46 +1,79 @@
 {
-    "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended"
+    ],
     "env": {
-        "es6": true,
+        "amd": true,
         "browser": true,
-        "commonjs": true,
+        "jquery": true,
         "node": true,
+        "es6": true,
+        "worker": true,
+        "commonjs": true,
         "mocha": true,
+        "jasmine": true,
+        "jest": true,
         "mongo": true
     },
-    "parserOptions": {
+    "parserOptions":{
         "ecmaVersion": 8,
         "sourceType": "module",
         "ecmaFeatures": {
-            "jsx": true,
+            "experimentalObjectRestSpread": true,
             "impliedStrict": true
         }
     },
+    "settings": {
+        "import/extensions": [".js"],
+        "import/resolver": {
+            "node": {
+                "extensions": [".js"]
+            }
+        }
+    },
+    "plugins": [
+        "import",
+        "async-await",
+        "eslint-plugin-prettier",
+        "import"
+    ],
     "rules": {
+        "arrow-body-style": ["error", "as-needed"],
+        "async-await/space-after-async": 1,
+        "async-await/space-after-await": 1,
+        "comma-dangle": 0,
         "constructor-super": "warn",
         "curly": "error",
+        "import/no-unresolved": [2, {"commonjs": true, "amd": true}],
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
+        "indent": [2, "tab", {"SwitchCase": 1}],
+        "keyword-spacing": ["error", { "before": true }],
+        "linebreak-style": ["error", "unix"],
+        "max-len": [1, 120, 2, { "ignoreComments": true }],
         "no-const-assign": "warn",
+        "no-cond-assign": [2, "except-parens"],
+        "no-console": "error",
         "no-this-before-super": "warn",
+        "no-tabs": 0,
         "no-undef": "warn",
         "no-unreachable": "warn",
-        "no-unused-vars": "warn",
-        "no-console": "error",
-        //"require-await": "error",
-        "valid-typeof": "warn",
-        "quotes": ["error", "single"],
-        "keyword-spacing": ["error", { "before": true }],
-        "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
-        // enable additional rules
-        "indent": ["error", 4],
-        "linebreak-style": ["error", "unix"],
-        "semi": ["error", "always"],
+        "no-unused-vars": ["error", {
+            "vars": "all",
+            "args": "all",
+            "ignoreRestSiblings": true,
+            "varsIgnorePattern": "React"
+        }],
+        "no-underscore-dangle": 0,
         "one-var": ["error", "never"],
-        // async await rules
-        "async-await/space-after-async": 1,
-        "async-await/space-after-await": 1
-    },
-    "extends": "eslint:recommended",
-    "plugins": [
-        "async-await"
-    ]
+        "radix": 0,
+        "quotes": ["error", "single"],
+        "quote-props": [1, "consistent-as-needed"],
+        "semi": ["error", "always"],
+        "space-infix-ops": 0,
+        "space-before-function-paren": ["error", {"anonymous": "never", "named": "never", "asyncArrow": "always"}],
+        "valid-typeof": "warn"
+    }
 }

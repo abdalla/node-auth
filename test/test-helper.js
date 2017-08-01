@@ -1,19 +1,19 @@
 'use strict';
-import mockgoose from 'mockgoose';
+import { Mockgoose } from 'mockgoose';
 import db from '../src/db';
 
-
+let mockgoose = new Mockgoose(db.mongoose);
 /*
  * Creates and/or connects to a mongo test database in memory
  * @param {function} cb callback function
  * @returns {void}
  */
-const createDB = (cb) => {
-    mockgoose(db.mongoose).then(() => {
-        db.init();
-        db.connect('memory');
-        cb();
-    });
+const createDB = async cb => {
+	mockgoose.prepareStorage().then(() => {
+		db.init();
+		db.connect('memory');
+		cb();
+	});
 };
 
 /*
@@ -21,10 +21,10 @@ const createDB = (cb) => {
  * @returns {void}
  */
 const destroyDB = () => {
-    db.disconnect();
+	db.disconnect();
 };
 
 module.exports = {
-    createDB,
-    destroyDB
+	createDB,
+	destroyDB
 };

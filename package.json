@@ -8,7 +8,7 @@
     "babel": "./node_modules/babel-cli/bin/babel-node.js --presets latest --plugins syntax-async-functions ./src/server.js",
     "babel-node": "./node_modules/babel-cli/bin/babel-node.js ./src/server.js",
     "start": "nodemon --exec npm run babel-node",
-    "test": "NODE_ENV=test mocha test --recursive --compilers js:babel-register --reporter spec",
+    "test": "NODE_ENV=test mocha test  --timeout 120000 --recursive --compilers js:babel-register --reporter spec",
     "t-travis": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose",
     "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*"
   },
@@ -32,14 +32,17 @@
     "babel-runtime": "^6.25.0",
     "chai": "^4.1.0",
     "coveralls": "^2.11.15",
-    "eslint": "^3.13.1",
+    "eslint": "^4.3.0",
     "eslint-plugin-async-await": "0.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "factory-girl": "^4.3.0",
     "faker": "^4.1.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
     "mocha-lcov-reporter": "^1.2.0",
-    "mockgoose": "^6.0.8",
+    "mockgoose": "^7.3.3",
+    "prettier": "^1.5.3",
     "supertest": "^3.0.0"
   },
   "dependencies": {
