@@ -11,7 +11,9 @@
     "test": "NODE_ENV=test mocha test --timeout 120000 --recursive --compilers js:babel-register --reporter spec",
     "t-travis": "NODE_ENV=test mocha test --timeout 240000 --recursive --compilers js:babel-register --reporter spec",
     "t-travis2": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha  --timeout 120000 -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info",
-    "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*"
+    "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -53,6 +55,8 @@
     "express": "^4.14.0",
     "jsonwebtoken": "^7.2.1",
     "mongoose": "^4.11.5",
-    "morgan": "^1.8.2"
-  }
+    "morgan": "^1.8.2",
+    "snyk": "^1.41.1"
+  },
+  "snyk": true
 }
