@@ -28,17 +28,17 @@ const stopServer = () => {
 	server.close();
 };
 
-server.on('close', function() {
+server.on('close', function () {
 	db.disconnect();
 });
 
 // listen for TERM signal .e.g. kill
-process.on('SIGTERM', function() {
+process.on('SIGTERM', function () {
 	stopServer();
 });
 
 // listen for INT signal e.g. Ctrl-C
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
 	stopServer();
 });
 

@@ -5,17 +5,11 @@ import db from '../src/db';
 let mockgoose = new Mockgoose(db.mongoose);
 /*
  * Creates and/or connects to a mongo test database in memory
- * @param {function} cb callback function
- * @returns {void}
  */
-const createDB = async cb => {
-	mockgoose.prepareStorage().then(() => {
-		db.init();
-		db.connect('memory', function(err) {
-			done(err);
-		});
-		cb();
-	});
+const createDB = async () => {
+	await mockgoose.prepareStorage();
+	db.init();
+	db.connect('memory', { useMongoClient: true });
 };
 
 /*

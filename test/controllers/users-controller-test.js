@@ -6,11 +6,9 @@ import { server, stopServer } from '../../src/server';
 import { createDB, destroyDB } from '../test-helper';
 
 describe('Users', () => {
-	before(done => {
+	before(() => {
 		chai.config.includeStack = true;
-		createDB(() => {
-			done();
-		});
+		createDB();
 	});
 
 	let _user = {};
