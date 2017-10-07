@@ -8,7 +8,6 @@ RUN npm install nodemon -g
 ADD . /src
 WORKDIR /src
 
-
 # Uncomment the lines bellow if you want to run inside the docker, but the hot reload will not work and you should compile
 #the image always ( after uncomment, run the command: "docker image build -t node-auth-api .")
 #
