@@ -2,10 +2,10 @@ node_modules
 dist
 .DS_Store
 *.log
-/.vscode
 /coverage
 /pre-test
 
 .idea
 .idea/
 src/coverage/
+.vscode
