@@ -10,6 +10,7 @@ const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
 
 //morgan configuration
+// console.log(env);
 app.use(
 	morgan('dev', {
 		skip: () => {

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  node-auth:
+    build: .
+    container_name: node-auth-api
+    image: node-auth-api
+    volumes:
+      - .:/src
+    tty: true
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    env_file: .env
+    links:
+      - node-auth-db:mongo
+    depends_on:
+      - node-auth-db
+    command: ["npm", "start"]
+
+  node-auth-db:
+    container_name: node-auth-db
+    image: mongo
+    ports:
+      - "27017:27017"

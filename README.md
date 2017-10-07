@@ -12,6 +12,8 @@ It is a project to help you to create an api using nodejs, with this kit, you wi
 # How to use
 To use it, you will need to have a mongodb server and change it's config on `config.js` into `src` folder.
 
+If you'll run it into a Docker using the project's docker-compose file, you don't need to take care with it (mongo server).
+
 ___config.js___
 ```javascript
 module.exports = {
@@ -19,12 +21,18 @@ module.exports = {
 }
 ```
 
-
 # Running api
 ```zsh
 1 - git clone https://github.com/abdalla/node-auth.git
 2 - npm install
 3 - npm start
+```
+
+# To use into Docker
+```zsh
+1 - git clone https://github.com/abdalla/node-auth.git
+2 - npm install
+3 - docker-compose up 
 ```
 
 # Running tests

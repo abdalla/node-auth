@@ -6,9 +6,16 @@ module.exports = {
 	init: () => {
 		mongoose.Promise = bluebird;
 	},
-	connect: async database =>
-		await mongoose.connect(database, {
-			useMongoClient: true
-		}),
+	connect: async database => {
+		try {
+			const connection = await mongoose.connect(database, {
+				useMongoClient: true
+			});
+			
+			return connection;
+		} catch (err) {
+			console.log('Error to connect on mongo', err);
+		}
+	},
 	disconnect: async () => await mongoose.connection.close()
 };
