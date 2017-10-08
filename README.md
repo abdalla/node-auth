@@ -20,6 +20,13 @@ module.exports = {
     'database': 'mongodb://localhost:27017/node-auth'
 }
 ```
+OR 
+For docker users:
+```javascript
+module.exports = {
+    'database': 'mongodb://database/node-auth'
+}
+```
 
 # Running api
 ```zsh
