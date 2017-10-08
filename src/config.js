@@ -1,5 +1,5 @@
 module.exports = {
-	database: 'mongodb://127.0.0.1:27017/node-auth',
+	database: 'mongodb://database/node-auth', // If you are not running through docker you have to change here.
 	token: {
 		publicKey: 'mysecretlife4u',
 		expires: {

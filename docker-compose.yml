@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  node-auth:
+  api:
     build: .
     container_name: node-auth-api
     image: node-auth-api
@@ -14,13 +14,15 @@ services:
       - "3000:3000"
     env_file: .env
     links:
-      - node-auth-db:mongo
+      - database:database
     depends_on:
-      - node-auth-db
+      - database
     command: ["npm", "start"]
 
-  node-auth-db:
+  database:
     container_name: node-auth-db
     image: mongo
+    expose:
+      - "27017"
     ports:
       - "27017:27017"
