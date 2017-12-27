@@ -1,5 +1,9 @@
 import userService from '../services/user-service';
 
+const success = {
+
+};
+
 module.exports = (app, router) => {
 	'use strict';
 
@@ -69,10 +73,10 @@ module.exports = (app, router) => {
 
 	router.post('/user', async (req, res) => {
 		try {
-			const user = await userService.createNewUser(req.body.user);
+			const createdUser = await userService.createNewUser(req.body.user);
 			return res.json({
 				success: true,
-				user
+				user: createdUser
 			});
 		} catch (err) {
 			res.status(500).json({
@@ -84,10 +88,10 @@ module.exports = (app, router) => {
 
 	router.put('/user', async (req, res) => {
 		try {
-			const user = await userService.updateUser(req.body.user._id, req.body.user);
+			const updatedUser = await userService.updateUser(req.body.user._id, req.body.user);
 			return res.json({
 				success: true,
-				user
+				user: updatedUser
 			});
 		} catch (err) {
 			res.status(500).json({
