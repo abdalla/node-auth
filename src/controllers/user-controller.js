@@ -1,10 +1,6 @@
 import userService from '../services/user-service';
 
-const success = {
-
-};
-
-module.exports = (app, router) => {
+const routes = (app, router) => {
 	'use strict';
 
 	router.get('/', (req, res) => {
@@ -138,3 +134,5 @@ module.exports = (app, router) => {
 		}
 	});
 };
+
+module.exports = routes;
