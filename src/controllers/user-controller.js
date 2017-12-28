@@ -9,10 +9,10 @@ const routes = (app, router) => {
 
 	router.post('/setup', async (req, res) => {
 		try {
-			const user = await userService.setupAdminUser();
+			const adminUser = await userService.setupAdminUser();
 			return res.json({
 				success: true,
-				user
+				user: adminUser
 			});
 		} catch (err) {
 			res.status(500).json({
@@ -105,10 +105,10 @@ const routes = (app, router) => {
 				newPassword: req.body.newPassword
 			};
 
-			const user = await userService.updateUserPassword(newUserPassword);
+			const updatedPasswordUser = await userService.updateUserPassword(newUserPassword);
 			return res.json({
 				success: true,
-				user
+				user: updatedPasswordUser
 			});
 
 		} catch (err) {
@@ -121,10 +121,10 @@ const routes = (app, router) => {
 
 	router.delete('/user/:id', async (req, res) => {
 		try {
-			const user = await userService.deleteUser(req.params.id);
+			const deletedUser = await userService.deleteUser(req.params.id);
 			return res.json({
 				success: true,
-				user
+				user: deletedUser
 			});
 		} catch (err) {
 			return res.status(500).json({
