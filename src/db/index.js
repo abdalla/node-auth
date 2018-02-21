@@ -14,6 +14,7 @@ module.exports = {
 			
 			return connection;
 		} catch (err) {
+			//eslint-disable-next-line
 			console.log('Error to connect on mongo', err);
 		}
 	},
