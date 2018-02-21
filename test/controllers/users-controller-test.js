@@ -356,6 +356,14 @@ describe('Users', () => {
 		});
 
 		it('should NOT update a user with invalid credentials', async () => {
+			let _userUpdate = {
+				_id: _user._id,
+				name: 'John Due',
+				userName: 'jd',
+				email: 'jd@a.com',
+				admin: false
+			};
+
 			try {
 				const res = await request(server)
 					.put('/api/user')
@@ -369,13 +377,6 @@ describe('Users', () => {
 			} catch (err) {
 				throw err;
 			}
-			let _userUpdate = {
-				_id: _user._id,
-				name: 'John Due',
-				userName: 'jd',
-				email: 'jd@a.com',
-				admin: false
-			};
 		});
 
 		it('should NOT update a user without ID', async () => {
@@ -608,8 +609,10 @@ describe('Users', () => {
 			}
 		});
 		after(() => {
+			console.log('vai acabar');
 			stopServer();
 			destroyDB();
+			console.log('acabou');
 		});
 	});
 });

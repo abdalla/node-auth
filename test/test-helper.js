@@ -11,7 +11,6 @@ const createDB = async () => {
 		await mockgoose.prepareStorage();
 		db.init();
 		db.connect('memory');
-		
 	} catch (err) {
 		throw err;
 	}
@@ -21,9 +20,7 @@ const createDB = async () => {
  * Disconnects from and destroys the mongo test database in memory
  * @returns {void}
  */
-const destroyDB = () => {
-	db.disconnect();
-};
+const destroyDB = () => db.disconnect();
 
 module.exports = {
 	createDB,
