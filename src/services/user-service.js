@@ -13,10 +13,11 @@ const setupAdminUser = async () => {
 const authentication = async (email, password) => {
 	try {
 		const user = await userDb.getByEmail(email);
+		
 		if (!user || !await user.validPassword(password)) {
 			throw 'Authentication failed, email or password invalid.';
 		} else {
-			const token = await jwt.sign(user, config.token.publicKey, {
+			const token = await jwt.sign(user.toObject(), config.token.publicKey, {
 				expiresIn: config.token.expires.oneDay
 			});
 			return token;

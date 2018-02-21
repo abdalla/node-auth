@@ -8,9 +8,7 @@ module.exports = {
 	},
 	connect: async database => {
 		try {
-			const connection = await mongoose.connect(database, {
-				useMongoClient: true
-			});
+			const connection = await mongoose.connect(database);
 			
 			return connection;
 		} catch (err) {

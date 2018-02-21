@@ -17,7 +17,9 @@ describe('Users', () => {
 	describe('Setup', () => {
 		it('should setup a user for test', async () => {
 			try {
-				const res = await request(server).post('/api/setup').expect(200);
+				const res = await request(server)
+					.post('/api/setup')
+					.expect(200);
 				_user = res.body.user;
 				await expect(res.body.success).to.be.equal(true);
 			} catch (err) {
@@ -97,7 +99,9 @@ describe('Users', () => {
 
 		it('should NOT get all users with no credentials', async () => {
 			try {
-				const res = await request(server).get('/api/users').expect(403);
+				const res = await request(server)
+					.get('/api/users')
+					.expect(403);
 				await expect(res.body.success).to.be.equal(false);
 				await expect(res.body.message).to.be.equal('Token is required.');
 			} catch (err) {

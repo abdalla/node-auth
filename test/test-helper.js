@@ -7,9 +7,14 @@ let mockgoose = new Mockgoose(db.mongoose);
  * Creates and/or connects to a mongo test database in memory
  */
 const createDB = async () => {
-	await mockgoose.prepareStorage();
-	db.init();
-	db.connect('memory', { useMongoClient: true });
+	try {
+		await mockgoose.prepareStorage();
+		db.init();
+		db.connect('memory');
+		
+	} catch (err) {
+		throw err;
+	}
 };
 
 /*

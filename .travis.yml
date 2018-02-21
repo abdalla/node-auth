@@ -7,4 +7,4 @@ cache:
 notifications:
     email: false
 script:
-    - npm run t-travis
+    - yarn t-travis

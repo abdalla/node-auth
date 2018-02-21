@@ -24,7 +24,11 @@ const routes = (app, router) => {
 
 	router.post('/auth', async (req, res) => {
 		try {
-			const token = await userService.authentication(req.body.email, req.body.password);
+			const token = await userService.authentication(
+				req.body.email,
+				req.body.password
+			);
+
 			return res.json({
 				success: true,
 				token
@@ -70,6 +74,7 @@ const routes = (app, router) => {
 	router.post('/user', async (req, res) => {
 		try {
 			const createdUser = await userService.createNewUser(req.body.user);
+
 			return res.json({
 				success: true,
 				user: createdUser
@@ -84,7 +89,10 @@ const routes = (app, router) => {
 
 	router.put('/user', async (req, res) => {
 		try {
-			const updatedUser = await userService.updateUser(req.body.user._id, req.body.user);
+			const updatedUser = await userService.updateUser(
+				req.body.user._id,
+				req.body.user
+			);
 			return res.json({
 				success: true,
 				user: updatedUser
@@ -105,12 +113,13 @@ const routes = (app, router) => {
 				newPassword: req.body.newPassword
 			};
 
-			const updatedPasswordUser = await userService.updateUserPassword(newUserPassword);
+			const updatedPasswordUser = await userService.updateUserPassword(
+				newUserPassword
+			);
 			return res.json({
 				success: true,
 				user: updatedPasswordUser
 			});
-
 		} catch (err) {
 			return res.status(500).json({
 				success: false,
