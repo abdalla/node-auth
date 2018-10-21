@@ -8,9 +8,15 @@ module.exports = {
 	},
 	connect: async database => {
 		try {
-			const connection = await mongoose.connect(database);
+			const conn =  await mongoose.connect(
+				database,
+				{ useNewUrlParser: true }
+			);
+
+			//eslint-disable-next-line
+			console.log(`MongoDb Connected on: ${database}`);
 			
-			return connection;
+			return conn;
 		} catch (err) {
 			//eslint-disable-next-line
 			console.log('Error to connect on mongo', err);

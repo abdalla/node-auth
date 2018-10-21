@@ -1,4 +1,5 @@
 'use strict';
+import MongodbMemoryServer from 'mongodb-memory-server';
 import { Mockgoose } from 'mockgoose';
 import db from '../src/db';
 
@@ -9,8 +10,6 @@ let mockgoose = new Mockgoose(db.mongoose);
 const createDB = async () => {
 	try {
 		await mockgoose.prepareStorage();
-		db.init();
-		db.connect('memory');
 	} catch (err) {
 		throw err;
 	}
