@@ -23,11 +23,10 @@ const routes = (app, router) => {
 	});
 
 	router.post('/auth', async (req, res) => {
+		const { email, password } = req.body;
+
 		try {
-			const token = await userService.authentication(
-				req.body.email,
-				req.body.password
-			);
+			const token = await userService.authentication(email, password);
 
 			return res.json({
 				success: true,
@@ -88,11 +87,10 @@ const routes = (app, router) => {
 	});
 
 	router.put('/user', async (req, res) => {
+		const { user } = req.body;
+
 		try {
-			const updatedUser = await userService.updateUser(
-				req.body.user._id,
-				req.body.user
-			);
+			const updatedUser = await userService.updateUser(user._id, user);
 			return res.json({
 				success: true,
 				user: updatedUser
@@ -106,11 +104,12 @@ const routes = (app, router) => {
 	});
 
 	router.put('/userpassword/:id', async (req, res) => {
+		const { currentPassword, newPassword } = req.body;
 		try {
 			const newUserPassword = {
 				userId: req.params.id,
-				currentPassword: req.body.currentPassword,
-				newPassword: req.body.newPassword
+				currentPassword: currentPassword,
+				newPassword: newPassword
 			};
 
 			const updatedPasswordUser = await userService.updateUserPassword(
