@@ -609,10 +609,8 @@ describe('Users', () => {
 			}
 		});
 		after(() => {
-			console.log('vai acabar');
 			stopServer();
 			destroyDB();
-			console.log('acabou');
 		});
 	});
 });

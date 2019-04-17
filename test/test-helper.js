@@ -1,15 +1,16 @@
 'use strict';
 import MongodbMemoryServer from 'mongodb-memory-server';
-import { Mockgoose } from 'mockgoose';
 import db from '../src/db';
 
-let mockgoose = new Mockgoose(db.mongoose);
+// let mockgoose = new Mockgoose(db.mongoose);
+const server = new MongodbMemoryServer();
 /*
  * Creates and/or connects to a mongo test database in memory
  */
 const createDB = async () => {
 	try {
-		await mockgoose.prepareStorage();
+		const url = await server.getConnectionString();
+		db.connect(url);
 	} catch (err) {
 		throw err;
 	}
@@ -19,7 +20,10 @@ const createDB = async () => {
  * Disconnects from and destroys the mongo test database in memory
  * @returns {void}
  */
-const destroyDB = () => db.disconnect();
+const destroyDB = () => {
+	db.disconnect();
+	// server.stop();
+};
 
 module.exports = {
 	createDB,
