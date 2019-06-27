@@ -2,7 +2,6 @@
 import MongodbMemoryServer from 'mongodb-memory-server';
 import db from '../src/db';
 
-// let mockgoose = new Mockgoose(db.mongoose);
 const server = new MongodbMemoryServer();
 /*
  * Creates and/or connects to a mongo test database in memory
