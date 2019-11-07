@@ -23,7 +23,6 @@ app.use(
 );
 
 apiController(app, config);
-db.init();
 db.connect(config.database);
 
 const server = app.listen(port);

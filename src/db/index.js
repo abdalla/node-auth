@@ -1,16 +1,15 @@
 import mongoose from 'mongoose';
-import bluebird from 'bluebird';
 
 module.exports = {
 	mongoose,
-	init: () => {
-		mongoose.Promise = bluebird;
-	},
 	connect: async database => {
 		try {
 			const conn =  await mongoose.connect(
 				database,
-				{ useNewUrlParser: true }
+				{ 
+					useNewUrlParser: true,
+					useUnifiedTopology: true 
+				}
 			);
 
 			//eslint-disable-next-line

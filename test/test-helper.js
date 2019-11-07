@@ -7,12 +7,8 @@ const server = new MongodbMemoryServer();
  * Creates and/or connects to a mongo test database in memory
  */
 const createDB = async () => {
-	try {
-		const url = await server.getConnectionString();
-		db.connect(url);
-	} catch (err) {
-		throw err;
-	}
+	const url = await server.getConnectionString();
+	db.connect(url);
 };
 
 /*

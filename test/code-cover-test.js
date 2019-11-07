@@ -53,12 +53,9 @@ describe('Middleware', () => {
 		app.use(requiredToken(options, apiController.validToken));
 		const server = app.listen('5054');
 
-		try {
-			const res = await request(server).get('/api/users').expect(403);
-			await expect(res.body.message).to.be.equal('Token is required.');
-			server.close();
-		} catch (err) {
-			throw err;
-		}
+		const res = await request(server).get('/api/users').expect(403);
+		await expect(res.body.message).to.be.equal('Token is required.');
+		server.close();
+		
 	});
 });

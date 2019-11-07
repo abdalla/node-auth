@@ -11,7 +11,7 @@
   "description": "##It is a project to help to create an api using nodejs.",
   "main": "server.js",
   "scripts": {
-    "lint": "eslint src/** --fix",
+    "lint": "eslint src/** --fix && eslint test/** --fix",
     "build": "babel src -s -D -d dist --presets es2015,latest",
     "babel": "./node_modules/babel-cli/bin/babel-node.js --presets latest --plugins syntax-async-functions ./src/server.js",
     "babel-node": "./node_modules/babel-cli/bin/babel-node.js ./src/server.js",
@@ -32,6 +32,7 @@
   "lint-staged": {
     "*.js": [
       "eslint src/** --fix",
+      "eslint test/** --fix",
       "git add"
     ]
   },
