@@ -9,79 +9,48 @@ const seed = async () => {
 		admin: true
 	});
 
-	try { 
-		return await save(user);
-	} catch (err) {
-		throw err;
-	}
+ 
+	return await save(user);
 };
 
 const getById = async userId => {
-	try {
-		return await User.findById(userId);
-	} catch (err) {
-		throw err;
-	}
+	return await User.findById(userId);
 };
 
 const getByEmail = async email => {
-	try {
-		return await User.findOne({ email });
-	} catch (err) {
-		throw err;
-	}
+	return await User.findOne({ email });
 };
 
 const getByFilter = async (filter) => {
-	try {
-		return await User.find(filter);
-	} catch (err) {
-		throw err;
-	}
+	return await User.find(filter);
 };
 
 const create = async user => {
 	const newUser = new User( user );
-	try { 
-		return await save(newUser);
-	} catch (err) {
-		throw err;
-	}
+	return await save(newUser);
 };
 
 const update = async (userId, user) => {
 	const toSave = new User( user );
-	try {
-		const changedUser = await User.findByIdAndUpdate(userId, toSave, {new: true, runValidators: true});
-		if (changedUser) {
-			return changedUser;
-		} else {
-			throw 'User not found' ;
-		}    
-	} catch (err) {
-		throw err;
-	}
+	const changedUser = await User.findByIdAndUpdate(userId, toSave, {new: true, runValidators: true});
+	if (changedUser) {
+		return changedUser;
+	} else {
+		throw 'User not found' ;
+	}    
 };
 
 const deleteUser = async userId => {
-	try {
-		const user = await User.findByIdAndRemove(userId, { passRawResult:  true });
-		if (user){
-			return user;
-		} else {
-			throw 'User not found';
-		}
-	} catch (err) {
-		throw err;
+	const user = await User.findByIdAndRemove(userId, { passRawResult:  true });
+	if (user){
+		return user;
+	} else {
+		throw 'User not found';
 	}
 };
 
 const save = async user => {
-	try {
-		return await user.save();
-	} catch (err) {
-		throw err;
-	}
+	return await user.save();
 };
 
 
