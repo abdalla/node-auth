@@ -8,7 +8,9 @@ module.exports = {
 				database,
 				{ 
 					useNewUrlParser: true,
-					useUnifiedTopology: true 
+					useUnifiedTopology: true,
+					useCreateIndex: true,
+					useFindAndModify: false
 				}
 			);
 
