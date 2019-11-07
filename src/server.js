@@ -1,5 +1,6 @@
 'use strict';
 import express from 'express';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import config from './config';
 import apiController from './controllers/api-controller';
@@ -8,6 +9,8 @@ import db from './db';
 const app = express();
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || 3000;
+
+app.use(helmet());
 
 //morgan configuration
 // console.log(env);
