@@ -8,7 +8,7 @@ import config from '../src/config';
 
 // TODO: try to avoid throw err
 describe('Middleware', () => {
-	it('Should get an erro if publicKey property doesnt exists on options passed to middleware', async () => {
+	it('Should get an error if publicKey property doesnt exists on options passed to middleware', async () => {
 		const app = express();
 		app.use(requiredToken({}, apiController.validToken));
 		const server = app.listen('5054');
