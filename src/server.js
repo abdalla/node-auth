@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 app.use(helmet());
 
-//morgan configuration
+// morgan configuration
 // console.log(env);
 app.use(
 	morgan('dev', {
