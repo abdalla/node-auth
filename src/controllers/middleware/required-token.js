@@ -6,7 +6,7 @@ const requiredToken =  ( options, tokenValidator ) => (req, res, next) => {
 	const ignoreRoute = ( options.ignoredRoutes || false ) && options.ignoredRoutes.some( route => route === req.originalUrl );
 
 	if (!ignoreRoute) {
-		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
 		if (!token) {
 			return res.status(403).send({
