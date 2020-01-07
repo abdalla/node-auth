@@ -21,7 +21,8 @@
     "t-travis2": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha  --timeout 120000 -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info",
     "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "commit": "./node_modules/commitizen/bin/git-cz"
   },
   "husky": {
     "hooks": {
@@ -36,6 +37,11 @@
       "eslint test/** --fix",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -59,7 +65,9 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "chai": "4.2.0",
+    "commitizen": "^4.0.3",
     "coveralls": "^3.0.7",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "6.6.0",
     "eslint-plugin-async-await": "0.0.0",
     "eslint-plugin-import": "^2.18.2",
