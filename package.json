@@ -21,14 +21,14 @@
     "t-travis2": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha  --timeout 120000 -- test/* --report lcovonly -- -R spec && cat ./coverage/lcov.info",
     "test-cover": "NODE_ENV=test node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha -- test/*",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect",
-    "commit": "./node_modules/commitizen/bin/git-cz"
+    "prepare": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "npm t",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "lint-staged": {
