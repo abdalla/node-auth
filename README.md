@@ -346,3 +346,8 @@ Response:
 [Supertest](https://www.npmjs.com/package/supertest) - For performing requests in your tests
 
 [Istanbul](https://www.npmjs.com/package/istanbul) - JS code coverage tool
+
+
+
+# FUTURE
+This project will be migrate to Typescript soon!
