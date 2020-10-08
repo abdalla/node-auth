@@ -7,17 +7,18 @@ const server = new MongodbMemoryServer();
  * Creates and/or connects to a mongo test database in memory
  */
 const createDB = async () => {
-	const url = await server.getConnectionString();
-	db.connect(url);
+	const uri = await server.getUri();
+	
+	await db.connect(uri);
 };
 
 /*
  * Disconnects from and destroys the mongo test database in memory
  * @returns {void}
  */
-const destroyDB = () => {
+const destroyDB = async () => {
 	db.disconnect();
-	// server.stop();
+	await server.stop();
 };
 
 module.exports = {
