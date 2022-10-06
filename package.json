@@ -82,7 +82,7 @@
 		"mongodb-memory-server": "7.4.3",
 		"nodemon": "^2.0.13",
 		"prettier": "2.4.1",
-		"snyk": "^1.736.0",
+		"snyk": "^1.996.0",
 		"supertest": "6.1.6"
 	},
 	"snyk": true
